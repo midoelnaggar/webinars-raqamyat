@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="52.161" height="27.046" viewBox="0 0 52.161 27.046">
+  <g id="live" transform="translate(-34.118 -9.412)">
+    <rect id="Rectangle_25" data-name="Rectangle 25" width="48.297" height="23.183" transform="translate(36.05 11.344)" fill="red"/>
+    <path id="Path_126" data-name="Path 126" d="M315.372,173.714h-48.3a1.933,1.933,0,0,0-1.932,1.932v23.183a1.933,1.933,0,0,0,1.932,1.932h48.3a1.933,1.933,0,0,0,1.932-1.932V175.646A1.933,1.933,0,0,0,315.372,173.714ZM313.44,196.9H269.007V177.578H313.44V196.9Z" transform="translate(-231.026 -164.302)" fill="#231f20"/>
+    <path id="Path_123" data-name="Path 123" d="M303.646,216.6h5.8v-3.864h-3.864V201.143h-3.864v13.523A1.933,1.933,0,0,0,303.646,216.6Z" transform="translate(-259.869 -185.935)"/>
+    <rect id="Rectangle_26" data-name="Rectangle 26" width="3.864" height="15.455" transform="translate(51.505 15.208)"/>
+    <path id="Path_124" data-name="Path 124" d="M380.934,214.615a1.932,1.932,0,0,0,1.857-1.4l3.864-13.523-3.713-1.063-2.007,7.022-2.007-7.022-3.713,1.063,3.864,13.523A1.932,1.932,0,0,0,380.934,214.615Z" transform="translate(-317.839 -183.952)"/>
+    <path id="Path_125" data-name="Path 125" d="M440.789,216.6h5.8v-3.864h-3.864V210.8h3.864v-3.864h-3.864v-1.932h3.864v-3.864h-5.8a1.933,1.933,0,0,0-1.932,1.932v11.591A1.933,1.933,0,0,0,440.789,216.6Z" transform="translate(-368.034 -185.935)"/>
+  </g>
+</svg>

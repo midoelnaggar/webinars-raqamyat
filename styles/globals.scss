@@ -1,0 +1,34 @@
+@import "./font.scss";
+
+:root {
+  --c1: #f0f6ff;
+  --c2: #00a4f8;
+  --cg60: #606060;
+  --cg70: #707070;
+  --dpi: 278px;
+}
+
+body {
+  font-family: "Gotham";
+  margin: 0;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+button {
+  font-family: "Gotham";
+}
+
+.app {
+position: relative;
+  width: 1903px;
+}
+
+.outlet {
+  background-image: url("/img/bg.png");
+  padding-block: 260px;
+}

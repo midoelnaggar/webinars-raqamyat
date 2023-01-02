@@ -1,0 +1,25 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  margin: 50px;
+  padding: 50px 278px;
+  width: calc(100% - 656px );
+  background-color: var(--c1);
+  border-radius: 28px;
+  display: flex;
+  justify-content: space-between;
+  .left {
+    color: var(--cg60);
+    letter-spacing: -0.45px;
+  }
+  .right {
+    display: flex;
+    a {
+      margin-inline-start:20px ;
+      img {
+        width: 22px;
+        height: 22px;
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+.header {
+  position: absolute;
+  left: 50%;
+  padding: 50px 60px;
+  transform: translate(-50%);
+  width: calc(100% - 552px);
+  display: flex;
+  align-items: center;
+
+  .left {
+    flex: 40%;
+    color: var(--cg60);
+    font-size: 17px;
+    font-weight: 500;
+    a {
+      margin-inline-end: 30px;
+    }
+  }
+  .center {
+    flex: 20%;
+    display: flex;
+    justify-content: center;
+    img {
+      width: 117px;
+      object-fit: contain;
+    }
+  }
+
+  .right {
+    flex: 40%;
+    display: flex;
+    justify-content: flex-end;
+    button{
+      margin-inline-start: 20px;
+    }
+    .applyBtn {
+      cursor: pointer;
+      background: none;
+      padding: 20px 30px;
+      border: 1px solid var(--c2);
+      border-radius: 30px;
+      color: var(--c2);
+      font-size: 17px;
+      font-weight: 500;
+    }
+    .searchBtn{
+      cursor: pointer;
+      position: relative;
+      width: 60px;
+      height: 60px;
+      border: none;
+      background-color: white;
+      border-radius: 50%;
+    }
+    img{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 22px;
+      height: 22px;
+    }
+  }
+}
