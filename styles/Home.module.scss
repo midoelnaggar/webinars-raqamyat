@@ -1,4 +1,90 @@
 .home {
+  .calendar {
+    position: fixed;
+    right: 97px;
+    width: 363px;
+    height: 477px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 3px solid white;
+    box-shadow: 0px 18px 48px #00000014;
+    border-radius: 18px;
+    z-index: 2;
+    transition: visibility 0.4s ease-in-out, opacity 0.4s ease-in-out, bottom 0.35s ease-in-out;
+    .calendarTitle {
+      background-color: var(--c1);
+      border-radius: 12px;
+      display: flex;
+      margin: 9px;
+      padding: 10px 62px;
+      align-items: center;
+      justify-content: space-between;
+      div {
+        display: flex;
+        align-items: center;
+
+        span {
+          height: 11px;
+          width: 11px;
+          border-radius: 99px;
+          margin-right: 5px;
+        }
+        div {
+          user-select: none;
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--cg70);
+        }
+      }
+    }
+  }
+  .calendarBtn {
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 150px;
+    width: 252px;
+    height: 60px;
+    background-color: white;
+    border: 2px solid var(--c2);
+    border-radius: 9999px;
+    z-index: 3;
+    display: flex;
+    .left {
+      position: absolute;
+      left: -2px;
+      top: -2px;
+      width: 60px;
+      height: 60px;
+      background: #e1edff;
+      border: 2px solid var(--c2);
+      border-radius: 9999px;
+      .calendarIcon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .right {
+      user-select: none;
+      position: absolute;
+      color: var(--c2);
+      letter-spacing: -0.13px;
+      font-weight: 500;
+      top: 50%;
+      left: 72px;
+      transform: translate(0, -50%);
+      width: 60%;
+      text-align: center;
+    }
+  }
+  .backdrop {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 1;
+  }
   .hero {
     position: relative;
     margin-top: 55px;
@@ -8,6 +94,7 @@
     z-index: 0;
     margin-bottom: 255px;
     img {
+      user-select: none;
       position: absolute;
       z-index: -1;
     }
@@ -33,6 +120,7 @@
     }
     .title {
       margin-top: 25px;
+      user-select: none;
       font-size: 118px;
       font-weight: 700;
       letter-spacing: -5.9px;
@@ -41,6 +129,7 @@
     }
     .subtitle {
       margin-top: 10px;
+      user-select: none;
       font-size: 21px;
       letter-spacing: -0.84px;
       line-height: 22px;
@@ -49,6 +138,7 @@
     .registerBtn {
       cursor: pointer;
       margin-top: 50px;
+      user-select: none;
       font-size: 17px;
       text-align: center;
       color: white;
@@ -70,36 +160,36 @@
     align-items: center;
     padding-inline: 35px;
     img {
+      user-select: none;
       height: 25px;
       margin-inline: 17.5px;
     }
   }
 
-  .liveWebinar {
+  .featuredWebinar {
     padding-inline: var(--dpi);
     padding-bottom: 51px;
     z-index: 0;
     position: relative;
-    .liveWebinarBg{
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: white;
-        z-index: -1;
-        position: absolute;
-        clip-path: polygon(82.3% 0, 82.3% 28%, 100% 28%, 100% 100%, 0 100%, 0 0);
-
-      }
+    .featuredWebinarBg {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      z-index: -1;
+      position: absolute;
+      clip-path: polygon(82.3% 0, 82.3% 28%, 100% 28%, 100% 100%, 0 100%, 0 0);
+    }
     .top {
       height: 431px;
       padding-bottom: 105px;
       display: flex;
       z-index: 0;
-      
-      
+
       .left {
         img {
+          user-select: none;
           object-fit: cover;
           width: 780px;
           height: 431px;
@@ -114,6 +204,89 @@
         box-shadow: 0px 6px 48px #edf5ff;
         border-radius: 38px;
         opacity: 1;
+        padding: 60px 30px;
+        .status {
+          font-size: 17px;
+          line-height: 19px;
+          color: var(--cg70);
+          font-weight: 600;
+          margin-bottom: 20px;
+        }
+        .dateAndTime{
+          display: flex;
+          font-size: 14px;
+          color: var(--cg70);
+          margin-bottom: 10px;
+          .date{
+            padding-inline: 2.5px;
+            font-size: 14px;
+            color: var(--cg70);
+          } 
+          .time {
+            padding-inline: 2.5px;
+            font-size: 14px;
+            color: var(--cg70);
+          }
+        }
+        .title {
+          font-size: 32px;
+          font-weight: 600;
+          letter-spacing: -0.8px;
+          line-height: 36px;
+        }
+        .speaker {
+          margin-top: 19px;
+          display: flex;
+          .speakerLeft {
+            img {
+              user-select: none;
+              width: 67px;
+              height: 67px;
+              box-shadow: 0px 8px 30px #00000029;
+              border-radius: 20px;
+            }
+          }
+          .speakerRight {
+            margin-inline-start: 15px;
+            .name {
+              text-transform: capitalize;
+              user-select: none;
+              font-size: 17px;
+              font-weight: 600;
+              line-height: 24px;
+            }
+            .position {
+              text-transform: capitalize;
+              user-select: none;
+              font-size: 17px;
+              line-height: 24px;
+              font-weight: 500;
+              letter-spacing: -0.65px;
+              color: var(--cg70);
+            }
+            .company {
+              text-transform: capitalize;
+              user-select: none;
+              font-size: 17px;
+              font-weight: 500;
+              color: var(--cg70);
+            }
+          }
+        }
+        .register {
+          margin-top: 30px;
+          .btn {
+            cursor: pointer;
+            background: none;
+            padding: 20px 50px;
+            border: 2px solid var(--c2);
+            border-radius: 30px;
+            color: var(--c2);
+            user-select: none;
+            font-size: 17px;
+            font-weight: 500;
+          }
+        }
       }
     }
     .bottom {
@@ -123,6 +296,7 @@
       background-color: white;
       .left {
         .title {
+          user-select: none;
           font-size: 19px;
           font-weight: 700;
           line-height: 21px;
@@ -137,6 +311,7 @@
               padding: 5px 15px 5px 5px;
               background-color: black;
               color: white;
+              user-select: none;
               font-size: 28px;
               letter-spacing: -1.26;
               line-height: 31px;
@@ -147,12 +322,14 @@
       }
       .right {
         a {
+          user-select: none;
           font-size: 17px;
           line-height: 19px;
           font-weight: 500;
           display: flex;
           align-items: flex-end;
           img {
+            user-select: none;
             margin-left: 5px;
             height: 17px;
           }

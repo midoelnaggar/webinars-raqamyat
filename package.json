@@ -9,12 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.10.14",
+    "@mui/material": "^5.10.14",
+    "axios": "^1.2.2",
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.1",
     "moment": "^2.29.4",
+    "mui-tel-input": "^2.0.4",
     "next": "13.1.1",
+    "notistack": "^2.0.8",
     "react": "18.2.0",
+    "react-calendar": "^4.0.0",
     "react-dom": "18.2.0",
+    "react-spinners": "^0.13.7",
     "sass": "^1.57.1"
   }
 }

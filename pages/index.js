@@ -1,8 +1,83 @@
+import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.scss";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import { Calendar } from "react-calendar";
+import moment from "moment";
+import { useEffect, useState } from "react";
+export async function getStaticProps() {
+  const res = await axios.get(
+    "https://newraq.raqamyat.com/public/api/webinars"
+  );
+  return {
+    props: { webinars: await res.data.data },
+  };
+}
 
-export default function Home() {
+export default function Home({ webinars }) {
+  const [featuredWebinar, setFeaturedWebinar] = useState({});
+  const [openCalendar, setOpenCalendar] = useState(false);
+  const handleCalendarBtn = () => {
+    setOpenCalendar(!openCalendar);
+  };
+  useEffect(() => {
+    setOpenCalendar(true);
+  }, []);
+
+  useEffect(() => {
+    markDays();
+    const futureWebinars = webinars.filter((webinar) => {
+      return moment(moment(webinar?.date, "DD-MM-YYYY")).isAfter(moment());
+    });
+
+    const pastWebinars = webinars.filter((webinar) => {
+      return moment(moment(webinar?.date, "DD-MM-YYYY")).isBefore(moment());
+    });
+
+    if (futureWebinars.length > 0) {
+      setFeaturedWebinar(futureWebinars[0]);
+    } else if (pastWebinars.length > 0) {
+      setFeaturedWebinar(pastWebinars[pastWebinars.length - 1]);
+    }
+  }, [webinars]);
+
+  const markDays = () => {
+    const days = document.getElementsByClassName(
+      "react-calendar__month-view__days__day"
+    );
+    for (let b = 0; b < webinars.length; b++) {
+      for (let c = 0; c < days.length; c++) {
+        if (
+          moment(days[c]?.firstChild.ariaLabel, "MMMM D[,] YYYY").format(
+            "DD-MM-YYYY"
+          ) === moment(webinars[b]?.date, "DD-MM-YYYY").format("DD-MM-YYYY")
+        ) {
+          const a = document.createElement("span");
+          a.className = "tag";
+          if (
+            moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isSame(
+              moment(),
+              "day"
+            )
+          ) {
+            a.style.backgroundColor = "#FF3939";
+          } else if (
+            moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isAfter(moment())
+          ) {
+            a.style.backgroundColor = "#00A4F8";
+          } else if (
+            moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isBefore(moment())
+          ) {
+            a.style.backgroundColor = "#707070";
+          }
+          days[c]?.classList?.add("hasWebinar");
+          days[c].appendChild(a);
+        }
+      }
+    }
+  };
+
   return (
     <>
       <Head>
@@ -12,6 +87,55 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.home}>
+        <div
+          style={{
+            visibility: openCalendar ? "visible" : "",
+            bottom: openCalendar ? "100px" : "-477px",
+            opacity: openCalendar ? 1 : 0,
+          }}
+          className={styles.calendar}
+        >
+          <div className={styles.calendarTitle}>
+            <div>
+              <span style={{ backgroundColor: "#707070" }} />
+              <div>Past</div>
+            </div>
+            <div>
+              <span style={{ backgroundColor: "#FF3939" }} />
+              <div>Live</div>
+            </div>
+            <div>
+              <span style={{ backgroundColor: "#00A4F8" }} />
+              <div>Upcoming</div>
+            </div>
+          </div>
+          <Calendar
+            onActiveStartDateChange={markDays}
+            calendarType="US"
+            formatShortWeekday={(locale, date) => moment(date).format("dd")}
+            nextLabel={
+              <img className="navIcon" src="/img/next.svg" alt="next" />
+            }
+            prevLabel={
+              <img className="navIcon" src="/img/prev.svg" alt="prev" />
+            }
+          />
+        </div>
+        <div className={styles.calendarBtn} onClick={handleCalendarBtn}>
+          <div className={styles.left}>
+            <DateRangeIcon
+              className={styles.calendarIcon}
+              htmlColor="#00A4F8"
+            />
+          </div>
+
+          <div className={styles.right}>Webinars Calendar</div>
+        </div>
+        <div
+          className={styles.backdrop}
+          style={{ display: openCalendar ? "block" : "none" }}
+          onClick={() => setOpenCalendar(false)}
+        ></div>
         <div className={styles.hero}>
           <img className={styles.shapes} src="/img/shapes.svg" alt="shapes" />
           <img className={styles.chart} src="/img/chart.svg" alt="chart" />
@@ -35,15 +159,56 @@ export default function Home() {
           <img src="/img/kashier.png" alt="kashier" />
           <img src="/img/oPay.png" alt="oPay" />
         </div>
-        <div className={styles.liveWebinar}>
-        <span className={styles.liveWebinarBg} />
+        <div className={styles.featuredWebinar}>
+          <span className={styles.featuredWebinarBg} />
 
           <div className={styles.top}>
-          <div className={styles.left}>
-            <img src="/img/webinarTest.png" alt="webinarImage" />
-          </div>
-          <div className={styles.right}></div>
-
+            <div className={styles.left}>
+              <img src="/img/webinarTest.png" alt="webinarImage" />
+            </div>
+            <div className={styles.right}>
+              <div className={styles.status}>
+                {moment(moment(featuredWebinar?.date, "DD-MM-YYYY")).isAfter(
+                  moment()
+                )
+                  ? "Upcoming Webinar"
+                  : moment(
+                      moment(featuredWebinar?.date, "DD-MM-YYYY")
+                    ).isBefore(moment()) && "Last Webinar"}
+              </div>
+              <div className={styles.dateAndTime}>
+                <DateRangeIcon className={styles.icon} fontSize="14px" htmlColor="#707070" />
+                <div className={styles.date}>
+                    {moment(featuredWebinar?.date, "DD-MM-YYYY").format("dddd[,] MMMM Do YYYY")}
+                </div>
+                |
+                <div className={styles.time}>
+                {moment(featuredWebinar?.date, "DD-MM-YYYY hh:mm:ss").format("hh[:]mm A")}
+                </div>
+              </div>
+              <div className={styles.title}>{featuredWebinar?.name}</div>
+              <div className={styles.speaker}>
+                <div className={styles.speakerLeft}>
+                  <img
+                    onError={(e) => (e.target.src = "/img/avatar.png")}
+                    src="/img/avatar.png"
+                    alt="speaker"
+                  />
+                </div>
+                <div className={styles.speakerRight}>
+                  <div className={styles.name}>{featuredWebinar?.speker}</div>
+                  <div className={styles.position}>
+                    {featuredWebinar?.position}
+                  </div>
+                  <div className={styles.company}>
+                    {featuredWebinar?.company}
+                  </div>
+                </div>
+              </div>
+              <div className={styles.register}>
+                <button className={styles.btn}>Register Now</button>
+              </div>
+            </div>
           </div>
           <div className={styles.bottom}>
             <div className={styles.left}>
@@ -61,7 +226,7 @@ export default function Home() {
               </div>
             </div>
             <div className={styles.right}>
-              <Link  href="/webinars">
+              <Link href="/webinars">
                 <div>all webinars</div>
                 <img src="/img/up-right-arrow.svg" alt="arrow" />
               </Link>
