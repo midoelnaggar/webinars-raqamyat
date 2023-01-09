@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
@@ -5,40 +6,55 @@ import styles from "../styles/Home.module.scss";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import { Calendar } from "react-calendar";
 import moment from "moment";
-import { useEffect, useState } from "react";
-export async function getStaticProps() {
-  const res = await axios.get(
-    "https://newraq.raqamyat.com/public/api/webinars"
-  );
-  return {
-    props: { webinars: await res.data.data },
-  };
-}
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
 
-export default function Home({ webinars }) {
+export default function Home() {
+  const [webinars, setWebinars] = useState([]);
+  const [upcomingWebinars, setUpcomingWebinars] = useState([]);
+  const [pastWebinars, setPastWebinars] = useState([]);
   const [featuredWebinar, setFeaturedWebinar] = useState({});
   const [openCalendar, setOpenCalendar] = useState(false);
+
   const handleCalendarBtn = () => {
     setOpenCalendar(!openCalendar);
   };
+
   useEffect(() => {
-    setOpenCalendar(true);
+    const getWebinars = async () => {
+      try {
+        const res = await axios.get(
+          "https://newraq.raqamyat.com/public/api/webinars"
+        );
+        if (res.status === 200) {
+          setWebinars(await res.data?.data);
+          setOpenCalendar(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getWebinars();
   }, []);
 
   useEffect(() => {
     markDays();
-    const futureWebinars = webinars.filter((webinar) => {
-      return moment(moment(webinar?.date, "DD-MM-YYYY")).isAfter(moment());
-    });
-
-    const pastWebinars = webinars.filter((webinar) => {
-      return moment(moment(webinar?.date, "DD-MM-YYYY")).isBefore(moment());
-    });
-
-    if (futureWebinars.length > 0) {
-      setFeaturedWebinar(futureWebinars[0]);
-    } else if (pastWebinars.length > 0) {
-      setFeaturedWebinar(pastWebinars[pastWebinars.length - 1]);
+    setUpcomingWebinars(
+      webinars?.filter((webinar) => {
+        return moment(moment(webinar?.date, "DD-MM-YYYY")).isAfter(moment());
+      })
+    );
+    setPastWebinars(
+      webinars?.filter((webinar) => {
+        return moment(moment(webinar?.date, "DD-MM-YYYY")).isBefore(moment());
+      })
+    );
+    if (upcomingWebinars?.length > 0) {
+      setFeaturedWebinar(upcomingWebinars[0]);
+    } else if (pastWebinars?.length > 0) {
+      setFeaturedWebinar(pastWebinars[pastWebinars?.length - 1]);
     }
   }, [webinars]);
 
@@ -46,7 +62,7 @@ export default function Home({ webinars }) {
     const days = document.getElementsByClassName(
       "react-calendar__month-view__days__day"
     );
-    for (let b = 0; b < webinars.length; b++) {
+    for (let b = 0; b < webinars?.length; b++) {
       for (let c = 0; c < days.length; c++) {
         if (
           moment(days[c]?.firstChild.ariaLabel, "MMMM D[,] YYYY").format(
@@ -71,7 +87,7 @@ export default function Home({ webinars }) {
           ) {
             a.style.backgroundColor = "#707070";
           }
-          days[c]?.classList?.add("hasWebinar");
+          days[c].name = "hasWebinar";
           days[c].appendChild(a);
         }
       }
@@ -164,7 +180,19 @@ export default function Home({ webinars }) {
 
           <div className={styles.top}>
             <div className={styles.left}>
-              <img src="/img/webinarTest.png" alt="webinarImage" />
+              <img
+                className={styles.webinarImage}
+                src={featuredWebinar?.image}
+                alt="webinarImage"
+              />
+              <div className={styles.watchNowBtn}>
+                <img
+                  className={styles.playIcon}
+                  src="/img/play.svg"
+                  alt="play"
+                />
+                Watch Now{" "}
+              </div>
             </div>
             <div className={styles.right}>
               <div className={styles.status}>
@@ -177,13 +205,21 @@ export default function Home({ webinars }) {
                     ).isBefore(moment()) && "Last Webinar"}
               </div>
               <div className={styles.dateAndTime}>
-                <DateRangeIcon className={styles.icon} fontSize="14px" htmlColor="#707070" />
+                <DateRangeIcon
+                  className={styles.icon}
+                  fontSize="14px"
+                  htmlColor="#707070"
+                />
                 <div className={styles.date}>
-                    {moment(featuredWebinar?.date, "DD-MM-YYYY").format("dddd[,] MMMM Do YYYY")}
+                  {moment(featuredWebinar?.date, "DD-MM-YYYY").format(
+                    "dddd[,] MMMM Do YYYY"
+                  )}
                 </div>
                 |
                 <div className={styles.time}>
-                {moment(featuredWebinar?.date, "DD-MM-YYYY hh:mm:ss").format("hh[:]mm A")}
+                  {moment(featuredWebinar?.date, "DD-MM-YYYY hh:mm:ss").format(
+                    "hh[:]mm A"
+                  )}
                 </div>
               </div>
               <div className={styles.title}>{featuredWebinar?.name}</div>
@@ -232,6 +268,127 @@ export default function Home({ webinars }) {
               </Link>
             </div>
           </div>
+        </div>
+        <div className={styles.upcomingWebinars}>
+          <img src="/img/shapes2.svg" className={styles.upcomingWebinarsBg} />
+          <div className={styles.header}>Upcoming Webinars</div>
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={150}
+            className={styles.swiper}
+            modules={[Navigation]}
+            navigation={true}
+          >
+            {Array.isArray(upcomingWebinars) &&
+              upcomingWebinars.map((webinar, index) => {
+                return (
+                  <SwiperSlide key={index} className={styles.slide}>
+                    <div className={styles.card}>
+                      <div className={styles.dateAndTime}>
+                        <DateRangeIcon
+                          className={styles.icon}
+                          fontSize="14px"
+                          htmlColor="#707070"
+                        />
+                        <div className={styles.date}>
+                          {moment(webinar?.date, "DD-MM-YYYY").format(
+                            "dddd[,] MMMM Do YYYY"
+                          )}
+                        </div>
+                        |
+                        <div className={styles.time}>
+                          {moment(webinar?.date, "DD-MM-YYYY hh:mm:ss").format(
+                            "hh[:]mm A"
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles.title}>{webinar?.name}</div>
+                      <div className={styles.speaker}>
+                        <div className={styles.speakerLeft}>
+                          <img
+                            onError={(e) => (e.target.src = "/img/avatar.png")}
+                            src={webinar?.author?.image}
+                            alt="speaker"
+                          />
+                        </div>
+                        <div className={styles.speakerRight}>
+                          <div className={styles.name}>{webinar?.speker}</div>
+                          <div className={styles.position}>
+                            {webinar?.position}
+                          </div>
+                          <div className={styles.company}>
+                            {webinar?.company}
+                          </div>
+                        </div>
+                      </div>
+                      <div className={styles.register}>
+                        <button className={styles.btn}>Register Now</button>
+                      </div>{" "}
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+          </Swiper>
+        </div>
+        <div className={styles.pastWebinars}>
+          <div className={styles.header}>Past Webinars</div>
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={150}
+            className={styles.swiper}
+            modules={[Navigation]}
+            navigation={true}
+          >
+            {Array.isArray(pastWebinars) &&
+              pastWebinars.map((webinar, index) => {
+                return (
+                  <SwiperSlide key={index} className={styles.slide}>
+                    <div className={styles.card}>
+                      <div className={styles.dateAndTime}>
+                        <DateRangeIcon
+                          className={styles.icon}
+                          fontSize="14px"
+                          htmlColor="#707070"
+                        />
+                        <div className={styles.date}>
+                          {moment(webinar?.date, "DD-MM-YYYY").format(
+                            "dddd[,] MMMM Do YYYY"
+                          )}
+                        </div>
+                        |
+                        <div className={styles.time}>
+                          {moment(webinar?.date, "DD-MM-YYYY hh:mm:ss").format(
+                            "hh[:]mm A"
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles.title}>{webinar?.name}</div>
+                      <div className={styles.speaker}>
+                        <div className={styles.speakerLeft}>
+                          <img
+                            onError={(e) => (e.target.src = "/img/avatar.png")}
+                            src="/img/avatar.png"
+                            alt="speaker"
+                          />
+                        </div>
+                        <div className={styles.speakerRight}>
+                          <div className={styles.name}>{webinar?.speker}</div>
+                          <div className={styles.position}>
+                            {webinar?.position}
+                          </div>
+                          <div className={styles.company}>
+                            {webinar?.company}
+                          </div>
+                        </div>
+                      </div>
+                      <div className={styles.register}>
+                        <button className={styles.btn}>Register Now</button>
+                      </div>{" "}
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+          </Swiper>
         </div>
       </div>
     </>

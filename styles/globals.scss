@@ -71,7 +71,7 @@ button {
   }
   .react-calendar__month-view__weekdays {
     margin: 3px;
-    .react-calendar__month-view__weekdays__weekday{
+    .react-calendar__month-view__weekdays__weekday {
       text-align: center;
       width: 41px;
       color: var(--c1);
@@ -85,12 +85,11 @@ button {
       flex-basis: unset !important;
       cursor: default;
       abbr {
-        text-decoration: none
+        text-decoration: none;
       }
     }
-   
   }
-  .react-calendar__month-view__days{
+  .react-calendar__month-view__days {
     margin: 7px 3px;
     .react-calendar__tile {
       text-align: center;
@@ -98,7 +97,7 @@ button {
       font-size: 17px;
       line-height: 19px;
       font-weight: 500;
-      background-color:var(--c1);
+      background-color: var(--c1);
       padding-block: 10px;
       margin: 5px;
       border-radius: 18px;
@@ -106,54 +105,99 @@ button {
       flex-basis: unset !important;
     }
     .react-calendar__month-view__days__day--neighboringMonth {
-      background-color: #F2F2F2;
+      background-color: #f2f2f2;
       color: var(--cg70);
-      span{
+      span {
         background-color: var(--cg70);
       }
     }
   }
-  .react-calendar__year-view__months + .react-calendar__year-view__years + .react-calendar__year-view__decades{
+  .react-calendar__year-view__months
+    + .react-calendar__year-view__years
+    + .react-calendar__year-view__decades {
     margin-inline: 10px;
     justify-content: space-between;
-  .react-calendar__tile {
-    background-color: var(--c1);
-    width: 30%;
-    font-size: 16px;
-    font-weight: 500;
-    padding-block: 10px;
-    margin-block: 5px;
-    flex-basis: unset !important;
-    border:none;
-    border-radius: 18px;
-    letter-spacing: -0.8px;
+    .react-calendar__tile {
+      background-color: var(--c1);
+      width: 30%;
+      font-size: 16px;
+      font-weight: 500;
+      padding-block: 10px;
+      margin-block: 5px;
+      flex-basis: unset !important;
+      border: none;
+      border-radius: 18px;
+      letter-spacing: -0.8px;
+    }
+  }
+
+  .react-calendar__year-view__months,
+  .react-calendar__decade-view__years,
+  .react-calendar__century-view__decades {
+    margin-inline: 10px;
+    justify-content: space-between;
+    .react-calendar__tile {
+      background-color: var(--c1);
+      width: 30%;
+      font-size: 16px;
+      font-weight: 500;
+      padding-block: 10px;
+      margin-block: 5px;
+      flex-basis: unset !important;
+      border: none;
+      border-radius: 18px;
+    }
   }
 }
-
-.react-calendar__year-view__months, .react-calendar__decade-view__years, .react-calendar__century-view__decades {
-  margin-inline: 10px;
-  justify-content: space-between;
-.react-calendar__tile {
-  background-color: var(--c1);
-  width: 30%;
-  font-size: 16px;
-  font-weight: 500;
-  padding-block: 10px;
-  margin-block: 5px;
-  flex-basis: unset !important;
-  border:none;
-  border-radius: 18px;
-}
-}
-}
-.hasWebinar{
+button[name="hasWebinar"] {
   position: relative;
-.tag{
-  position: absolute;
-  top: 11px;
-  right: 5px;
-  width:6px ;
-  height: 6px;
-  border-radius: 99px;
+  .tag {
+    position: absolute;
+    top: 11px;
+    right: 5px;
+    width: 6px;
+    height: 6px;
+    border-radius: 99px;
+  }
 }
+.swiper {
+  overflow: visible !important;
+}
+.swiper-button-prev {
+  height: 38px !important;
+  width: 38px !important;
+  left: unset !important;
+  right: 320px !important;
+  top: -40px !important;
+  background: none !important;
+  border: 2px solid #dbe9ff;
+  border-radius: 12px;
+  background-image: url("/img/arrowLeft.svg") !important;
+  background-position: center !important;
+  background-size: 50% !important;
+  background-repeat: no-repeat !important;
+
+}
+
+.swiper-button-prev::after {
+  content: none !important;
+}
+
+.swiper-button-next {
+  height: 38px !important;
+  width: 38px !important;
+  left: unset !important;
+  right: 268px !important;
+  top: -40px !important;
+  background: none !important;
+  border: 2px solid #dbe9ff;
+  border-radius: 12px;
+  background-image: url("/img/arrowRight.svg") !important;
+  background-position: center !important;
+  background-size: 50% !important;
+  background-repeat: no-repeat !important;
+}
+
+.swiper-button-next::after {
+  content: none !important;
 }
