@@ -5,7 +5,7 @@
   --c2: #00a4f8;
   --cg60: #606060;
   --cg70: #707070;
-  --dpi: 278px;
+  --dpi: 270px;
 }
 
 body {
@@ -30,7 +30,8 @@ button {
 
 .outlet {
   background-image: url("/img/bg.png");
-  padding-block: 260px;
+  background-repeat: no-repeat;
+  padding-block: 240px;
 }
 
 .react-calendar {
@@ -160,9 +161,7 @@ button[name="hasWebinar"] {
     border-radius: 99px;
   }
 }
-.swiper {
-  overflow: visible !important;
-}
+
 .swiper-button-prev {
   height: 38px !important;
   width: 38px !important;

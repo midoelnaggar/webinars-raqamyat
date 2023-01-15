@@ -15,6 +15,20 @@
     a {
       margin-inline-end: 30px;
     }
+    .activeMenuLink {
+      color: black;
+      position: relative;
+      span {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%,50%);
+        width: 12px;
+        height: 3px;
+        background-color: var(--c2);
+        border-radius: 9999px;
+      }
+    }
   }
   .center {
     flex: 20%;
@@ -30,7 +44,7 @@
     flex: 40%;
     display: flex;
     justify-content: flex-end;
-    button{
+    button {
       margin-inline-start: 20px;
     }
     .applyBtn {
@@ -43,7 +57,7 @@
       font-size: 17px;
       font-weight: 500;
     }
-    .searchBtn{
+    .searchBtn {
       cursor: pointer;
       position: relative;
       width: 60px;
@@ -52,11 +66,11 @@
       background-color: white;
       border-radius: 50%;
     }
-    img{
+    img {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%,-50%);
+      transform: translate(-50%, -50%);
       width: 22px;
       height: 22px;
     }

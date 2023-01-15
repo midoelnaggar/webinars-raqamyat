@@ -1,0 +1,94 @@
+.about {
+  margin-inline: 275px;
+  .title {
+    user-select: none;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 21px;
+    margin-bottom: 3px;
+    span {
+      background-color: white;
+      padding-top: 8px;
+      padding-right: 8px;
+    }
+  }
+  .subtitle {
+    display: flex;
+    flex-direction: column;
+    div {
+      margin-block: 5px;
+      span {
+        padding: 5px 15px 5px 5px;
+        background-color: black;
+        color: white;
+        user-select: none;
+        font-size: 28px;
+        letter-spacing: -1.26;
+        line-height: 31px;
+        font-weight: 600;
+      }
+    }
+  }
+  .desc {
+    margin-top: 35px;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 39px;
+    letter-spacing: -1.73px;
+  }
+  .subDesc {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    .allWebinarsLink {
+      display: flex;
+      justify-content: flex-end;
+      a {
+        user-select: none;
+        font-size: 17px;
+        line-height: 19px;
+        font-weight: 500;
+        display: flex;
+        align-items: flex-end;
+        img {
+          user-select: none;
+          margin-left: 5px;
+          height: 17px;
+        }
+      }
+    }
+    .start {
+      width: 45%;
+      font-size: 17px;
+    }
+    .end {
+      .top {
+        background-image: url("/img/about.png");
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      .bottom {
+        display: flex;
+        justify-content: flex-end   ;
+        div {
+          max-width: 277px;
+          font-size: 17px;
+          letter-spacing: -0.48px;
+          color: var(--cg70);
+          a {
+            .raqLogo {
+              width: 93px;
+              margin-left: 7px;
+            }
+            .arrow {
+              user-select: none;
+              margin-bottom: -2px;
+              margin-left: 7px;
+              height: 17px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
