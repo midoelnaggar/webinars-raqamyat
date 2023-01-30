@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { createRoot } from "react-dom/client";
 import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 import DateRangeIcon from "@mui/icons-material/DateRange";
@@ -50,30 +51,37 @@ const feedbacks = [
   },
 ];
 
-export default function Home({webinars,pastWebinars,upcomingWebinars,featuredWebinar}) {
-
+export default function Home({
+  webinars,
+  pastWebinars,
+  upcomingWebinars,
+  featuredWebinar,
+}) {
   const [openCalendar, setOpenCalendar] = useState(false);
 
   const getLogos = () => {
     const logos = [];
     for (let i = 1; i <= 15; i++) {
-      logos.push(<div className={styles.clientLogo}><div><img  src={`/img/clients/${i}.png`} alt={i} /></div></div>)
+      logos.push(
+        <div className={styles.clientLogo}>
+          <div>
+            <img src={`/img/clients/${i}.png`} alt={i} />
+          </div>
+        </div>
+      );
     }
-    return logos
-  }
+    return logos;
+  };
 
   const handleCalendarBtn = () => {
     setOpenCalendar(!openCalendar);
   };
 
-
-
   useEffect(() => {
-    if (webinars?.length >0) {
+    if (webinars?.length > 0) {
       markDays();
-      setOpenCalendar(true)
-  
-  }
+      setOpenCalendar(true);
+    }
   }, [webinars]);
 
   const markDays = () => {
@@ -83,7 +91,7 @@ export default function Home({webinars,pastWebinars,upcomingWebinars,featuredWeb
     for (let b = 0; b < webinars?.length; b++) {
       for (let c = 0; c < days.length; c++) {
         if (
-          moment(days[c]?.firstChild.ariaLabel, "MMMM D[,] YYYY").format(
+          moment(days[c]?.firstChild?.ariaLabel, "MMMM D[,] YYYY").format(
             "DD-MM-YYYY"
           ) === moment(webinars[b]?.date, "DD-MM-YYYY").format("DD-MM-YYYY")
         ) {
@@ -105,8 +113,77 @@ export default function Home({webinars,pastWebinars,upcomingWebinars,featuredWeb
           ) {
             a.style.backgroundColor = "#707070";
           }
+          const tooltipContainer = document.createElement("div");
+          tooltipContainer.style.visibility = "hidden";
+          tooltipContainer.className = "tooltipContainer";
           days[c].name = "hasWebinar";
+          days[c].autofocus = false;
           days[c].appendChild(a);
+          days[c].addEventListener("click", (e) => {
+            if (tooltipContainer.style.visibility === "hidden") {
+              tooltipContainer.style.visibility = "visible";
+            } else {
+              tooltipContainer.style.visibility = "hidden";
+            }
+          });
+          if (!days[c].querySelector(".tooltipContainer")) {
+            days[c].appendChild(tooltipContainer);
+          }
+          const root = createRoot(tooltipContainer);
+          root.render(
+            <Link className="tooltip" href={`/webinars/${webinars[b]?.id}`}>
+              <div className="tooltipStatus">
+                {moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isSame(
+                  moment(),
+                  "day"
+                ) && (
+                  <>
+                    <span style={{ backgroundColor: "#FF3939" }} />{" "}
+                    <div>Live Webinar</div>{" "}
+                  </>
+                )}
+                {moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isAfter(
+                  moment(),
+                  "day"
+                ) && (
+                  <>
+                    <span style={{ backgroundColor: "#00A4F8" }} />{" "}
+                    <div>Upcoming Webinar</div>{" "}
+                  </>
+                )}
+                {moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isBefore(
+                  moment(),
+                  "day"
+                ) && (
+                  <>
+                    <span style={{ backgroundColor: "#707070" }} />{" "}
+                    <div>Past Webinar</div>{" "}
+                  </>
+                )}
+              </div>
+              <div className="tooltiDateAndTime">
+                <DateRangeIcon
+                  className="icon"
+                  fontSize="14px"
+                  htmlColor="#707070"
+                />
+                <div className="date">
+                  {moment(webinars[b]?.date, "DD-MM-YYYY").format(
+                    "DD MMM[.] YYYY"
+                  )}
+                </div>
+                |
+                <div className="time">
+                  {moment(webinars[b]?.date, "DD-MM-YYYY hh:mm:ss").format(
+                    "hh[:]mm A"
+                  )}
+                </div>
+              </div>
+              <div className="tooltipTitle">
+                {webinars[b]?.name}
+              </div>
+            </Link>
+          );
         }
       }
     }
@@ -114,11 +191,10 @@ export default function Home({webinars,pastWebinars,upcomingWebinars,featuredWeb
 
   return (
     <>
-
       <div className={styles.home}>
         <div
           style={{
-            visibility: openCalendar ? "visible" : "",
+            visibility: openCalendar ? "visible" : "hidden",
             bottom: openCalendar ? "100px" : "-477px",
             opacity: openCalendar ? 1 : 0,
           }}
@@ -140,7 +216,7 @@ export default function Home({webinars,pastWebinars,upcomingWebinars,featuredWeb
           </div>
           <Calendar
             onActiveStartDateChange={markDays}
-            calendarType="US"
+            calendarType="Hebrew"
             formatShortWeekday={(locale, date) => moment(date).format("dd")}
             nextLabel={
               <img className="navIcon" src="/img/next.svg" alt="next" />
@@ -390,7 +466,7 @@ export default function Home({webinars,pastWebinars,upcomingWebinars,featuredWeb
                         </div>
                       </div>
                       <div className={styles.register}>
-                        <button className={styles.btn}>Register Now</button>
+                        <button className={styles.btn}>Get Recordings</button>
                       </div>{" "}
                     </div>
                   </SwiperSlide>
@@ -477,12 +553,8 @@ export default function Home({webinars,pastWebinars,upcomingWebinars,featuredWeb
               <span>is Our Priority</span>
             </div>
           </div>
-          <div className={styles.clientLogos}>
-            {
-              getLogos()
-            }
-          </div>
-          </div>
+          <div className={styles.clientLogos}>{getLogos()}</div>
+        </div>
       </div>
     </>
   );

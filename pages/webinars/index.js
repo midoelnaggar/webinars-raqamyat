@@ -1,9 +1,11 @@
 import moment from "moment";
-import styles from "../styles/webinars.module.scss";
+import styles from "../../styles/webinars.module.scss";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -98,7 +100,15 @@ function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
                 </div>
               </div>
               <div className={styles.register}>
-                <button className={styles.btn}>Register Now</button>
+                <button onClick={()=>{
+                        router.push(`/webinars/${featuredWebinar?.id}`)
+                      }} className={styles.btn}>{moment(moment(featuredWebinar?.date, "DD-MM-YYYY")).isAfter(
+                        moment()
+                      )
+                        ? "Register Now"
+                        : moment(
+                            moment(featuredWebinar?.date, "DD-MM-YYYY")
+                          ).isBefore(moment()) && "Get Recordings"}</button>
               </div>
             </div>
           </div>
@@ -146,7 +156,9 @@ function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
                       </div>
                     </div>
                     <div className={styles.register}>
-                      <button className={styles.btn}>Register Now</button>
+                      <button onClick={()=>{
+                        router.push(`/webinars/${webinar?.id}`)
+                      }} className={styles.btn}>Register Now</button>
                     </div>
                   </div>
                 );
@@ -197,7 +209,9 @@ function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
                       </div>
                     </div>
                     <div className={styles.register}>
-                      <button className={styles.btn}>Register Now</button>
+                      <button onClick={()=>{
+                        router.push(`/webinars/${webinar?.id}`)
+                      }} className={styles.btn}>Get Recordings</button>
                     </div>
                   </div>
                 );

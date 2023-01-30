@@ -7,7 +7,9 @@
   --cg70: #707070;
   --dpi: 270px;
 }
-
+*{
+  font-family: "Gotham" !important;
+}
 body {
   font-family: "Gotham";
   margin: 0;
@@ -48,6 +50,7 @@ button {
     }
     .react-calendar__navigation__prev-button,
     .react-calendar__navigation__next-button {
+      cursor: pointer;
       padding: 16px 20.5px;
       border: 2px solid #dbe9ff;
       border-radius: 12px;
@@ -62,6 +65,8 @@ button {
       }
     }
     .react-calendar__navigation__label {
+      cursor: pointer;
+
       flex-grow: unset !important;
       background: none;
       border: none;
@@ -106,6 +111,7 @@ button {
       flex-basis: unset !important;
     }
     .react-calendar__month-view__days__day--neighboringMonth {
+      cursor: unset;
       background-color: #f2f2f2;
       color: var(--cg70);
       span {
@@ -150,15 +156,94 @@ button {
     }
   }
 }
+
 button[name="hasWebinar"] {
+  cursor: pointer;
   position: relative;
+  overflow: visible !important;
   .tag {
+    pointer-events: none;
     position: absolute;
     top: 11px;
     right: 5px;
     width: 6px;
     height: 6px;
-    border-radius: 99px;
+    border-radius: 99999px;
+  }
+  abbr {
+    pointer-events: none;
+  }
+  .tooltipContainer {
+    width: 313px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 18px;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    box-shadow: 0px 0px 48px #00000029;
+    .tooltip {
+      .tooltipStatus {
+        display: flex;
+        align-items: center;
+        span {
+          width: 11px;
+          height: 11px;
+          border-radius: 9999px;
+          margin-inline-end: 5px;
+        }
+        div{
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--cg70);
+        }
+      } .tooltiDateAndTime {
+        margin-block: 10px;
+        font-weight: 400;
+        display: flex;
+        font-size: 14px;
+        line-height: 14px;
+        color: var(--cg70);
+        margin-bottom: 10px;
+        .date {
+          padding-inline: 2.5px;
+          font-size: 14px;
+          color: var(--cg70);
+        }
+        .time {
+          padding-inline: 2.5px;
+          font-size: 14px;
+          color: var(--cg70);
+        }
+      }
+      .tooltipTitle {
+        text-align: start;
+        font-size: 18px;
+        line-height: 20px;
+        font-weight: 600;
+      }
+    }
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: white transparent transparent transparent;
+    }
+  }
+}
+.react-calendar__month-view__days__day--weekend {
+  .tooltipContainer {
+    left: -120px !important;
+
+    .tooltip::after {
+      left: 326px !important;
+    }
   }
 }
 
@@ -175,7 +260,6 @@ button[name="hasWebinar"] {
   background-position: center !important;
   background-size: 50% !important;
   background-repeat: no-repeat !important;
-
 }
 
 .swiper-button-prev::after {
@@ -199,4 +283,17 @@ button[name="hasWebinar"] {
 
 .swiper-button-next::after {
   content: none !important;
+}
+
+.MuiInputBase-formControl{
+  border: 1px solid #E1EDFF;
+  outline: none;
+  border-radius: 15px;
+  background-color: white;
+  padding: 5.5px 22px;
+  font-size: 17px;
+  color: var(--cg70) !important;
+}
+fieldset {
+  display: none;
 }
