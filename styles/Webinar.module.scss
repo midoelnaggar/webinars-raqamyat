@@ -165,6 +165,21 @@
         }
         .desc {
           margin-top: 50px;
+          
+          ul {
+            list-style: none;
+          }
+          li::before {
+  
+            display: inline-block;
+  
+            content: "\f00c";
+            font-family: "FontAwesome";
+            font-size: 18px;
+            margin-inline-end: 14px;
+            margin-inline-start: -32px;
+  
+          }
         }
       }
       .right {

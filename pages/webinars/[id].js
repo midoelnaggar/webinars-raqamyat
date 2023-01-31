@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { ScaleLoader } from "react-spinners";
+import { CircleLoader } from "react-spinners";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import styles from "../../styles/Webinar.module.scss";
@@ -8,8 +8,9 @@ import moment from "moment";
 import { TextField } from "@mui/material";
 import { MuiTelInput } from "mui-tel-input";
 import Link from "next/link";
+import PastWebinars from "../../components/PastWebinars";
 
-function Webinar({ webinars }) {
+function Webinar({ webinars,pastWebinars }) {
   const [webinar, setWebinar] = useState({});
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -36,7 +37,7 @@ function Webinar({ webinars }) {
         className={styles.loading}
         style={{ display: loading ? "flex" : "none" }}
       >
-        <ScaleLoader color="#00a4f8" />
+        <CircleLoader color="#00a4f8" />
       </div>
       <div className={styles.webinarPage}>
         <div className={styles.top}>
@@ -128,6 +129,7 @@ function Webinar({ webinars }) {
             </div>
           </div>
         </div>
+        <PastWebinars pastWebinars={pastWebinars} />
       </div>
     </>
   );
