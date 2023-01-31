@@ -9,6 +9,7 @@
 }
 *{
   font-family: "Gotham" !important;
+  user-select: none;
 }
 body {
   font-family: "Gotham";
@@ -296,4 +297,23 @@ button[name="hasWebinar"] {
 }
 fieldset {
   display: none;
+}
+
+.MuiAutocomplete-input {
+  padding: 13px 32px !important;
+}
+
+.MuiChip-deletable {
+  span{
+    font-size: 17px;
+  }
+  span::before{
+    color: var(--cg70);
+    font-size: 17px;
+    content: "\f00c";
+    color: var(--c2);
+    font-size: 18px;
+  font-family: "FontAwesome";
+  margin-inline-end: 5px;
+  }
 }

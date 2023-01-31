@@ -66,7 +66,7 @@
       }
     }
     .right {
-      user-select: none;
+      
       position: absolute;
       color: var(--c2);
       letter-spacing: -0.13px;
@@ -88,7 +88,7 @@
     z-index: 0;
     margin-bottom: 255px;
     img {
-      user-select: none;
+      
       position: absolute;
       z-index: -1;
     }
@@ -114,7 +114,7 @@
     }
     .title {
       margin-top: 25px;
-      user-select: none;
+      
       font-size: 118px;
       font-weight: 700;
       letter-spacing: -5.9px;
@@ -123,7 +123,7 @@
     }
     .subtitle {
       margin-top: 10px;
-      user-select: none;
+      
       font-size: 21px;
       letter-spacing: -0.84px;
       line-height: 22px;
@@ -132,7 +132,7 @@
     .registerBtn {
       cursor: pointer;
       margin-top: 50px;
-      user-select: none;
+      
       font-size: 17px;
       text-align: center;
       color: white;
@@ -154,7 +154,7 @@
     align-items: center;
     padding-inline: 35px;
     img {
-      user-select: none;
+      
       height: 25px;
       margin-inline: 17.5px;
     }
@@ -456,7 +456,7 @@
       padding-bottom: 48px;
       width: 50%;
       cursor: grab !important;
-      user-select: none;
+      
       .feedback {
         overflow-x: hidden !important;
         .feedbackContainer {
@@ -522,7 +522,7 @@
     }
     .end {
       .title {
-        user-select: none;
+        
         font-size: 19px;
         font-weight: 700;
         line-height: 21px;
@@ -585,7 +585,7 @@
       border: 2px solid var(--c2);
       border-radius: 30px;
       color: var(--c2);
-      user-select: none;
+      
       font-size: 17px;
       font-weight: 500;
     }
@@ -595,7 +595,7 @@
     padding: 110px 310px;
 
     .title {
-      user-select: none;
+      
       font-size: 19px;
       font-weight: 700;
       line-height: 21px;

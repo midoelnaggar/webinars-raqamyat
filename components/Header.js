@@ -1,3 +1,4 @@
+import { Search } from "@mui/icons-material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -5,7 +6,7 @@ import styles from "../styles/Header.module.scss";
 
 
 export default function Header() {
-  const { asPath } = useRouter();
+  const { asPath, push } = useRouter();
   useEffect(() => {
     console.log(asPath)
   }, []);
@@ -17,7 +18,7 @@ export default function Header() {
       </div>
       <div className={styles.center}><Link href="/"><img src="/img/logo.png" alt="logo" /></Link></div>
       <div className={styles.right}>
-      <button className={styles.applyBtn}>Apply For Free</button>
+      <button onClick={()=>push("/apply")} className={styles.applyBtn}>Apply For Free</button>
       <button className={styles.searchBtn}><img src="/img/search.svg" alt="search"/></button>
       </div>
     </div>

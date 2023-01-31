@@ -1,0 +1,172 @@
+.applyPage {
+  padding-inline: 270px;
+  .top {
+    .title {
+      
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 21px;
+      margin-bottom: 3px;
+      span {
+        background-color: white;
+        padding-top: 8px;
+        padding-right: 8px;
+      }
+    }
+    .subtitle {
+      display: flex;
+      flex-direction: column;
+      div {
+        margin-block: 5px;
+        span {
+          padding: 5px 15px 5px 5px;
+          background-color: black;
+          color: white;
+          
+          font-size: 28px;
+          letter-spacing: -1.26;
+          line-height: 31px;
+          font-weight: 600;
+        }
+      }
+    }
+    .desc {
+      margin-top: 35px;
+      font-size: 36px;
+      font-weight: 500;
+      line-height: 39px;
+      letter-spacing: -1.73px;
+      max-width: 910px;
+    }
+    .subDesc {
+      ul {
+        list-style: none;
+      }
+      li::before {
+        display: inline-block;
+
+        content: "\f560";
+        font-family: "FontAwesome";
+        margin-inline-end: 14px;
+        margin-inline-start: -32px;
+        color: var(--c2);
+      }
+
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      .start {
+        width: 45%;
+        font-size: 17px;
+      }
+      .end {
+        .top {
+          background-image: url("/img/apply.png");
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+        .bottom {
+          display: flex;
+          justify-content: flex-end;
+          div {
+            max-width: 277px;
+            font-size: 17px;
+            letter-spacing: -0.48px;
+            color: var(--cg70);
+            a {
+              .raqLogo {
+                width: 93px;
+                margin-left: 7px;
+              }
+              .arrow {
+                
+                margin-bottom: -2px;
+                margin-left: 7px;
+                height: 17px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .bottom {
+    margin-bottom: 100px;
+    background-color: #EAF3FF;
+    .applyForm {
+      background-image: url("/img/shapes7.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 80%;
+      width: 100%;
+      padding: 40px;
+      background-color: white;
+      box-shadow: 0px 3px 48px #e1edffc7;
+      border-radius: 18px;
+      .title {
+        color: #2a2a2a;
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .inputs {
+        margin-top: 25px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .inputContainer {
+          width: 32%;
+          color: var(--cg70) !important;
+          margin-block: 25px;
+          position: relative;
+          label {
+            padding: 4px 12px;
+            position: absolute;
+            left: 20px;
+            top: -15px;
+            font-size: 17px;
+            letter-spacing: -0.65px;
+            background-color: white;
+            border: 1px solid #e1edff;
+            border-radius: 15px;
+          }
+        }
+      }
+      .agree {
+        display: flex;
+        margin-block: 10px;
+        align-items: center;
+        color: var(--cg70);
+        input {
+          appearance: none;
+          margin-inline-end: 10px;
+        }
+        input::before {
+            cursor: pointer;
+          content: "\f111";
+            color: var(--cg70);
+            font-size: 18px;
+          font-family: "Font Awesome 6 Free";
+    
+        }
+        input:checked::before {
+          content: "\f058";
+
+          color: var(--c2);
+        }
+      }
+    }
+    .applyBtn {
+        margin-top: 20px;
+        cursor: pointer;
+        
+        font-size: 17px;
+        text-align: center;
+        color: white;
+        background: #0093de 0% 0% no-repeat padding-box;
+        box-shadow: 0px 8px 48px #00a4f861;
+        border: none;
+        border-radius: 40px;
+        padding: 20px 80px;
+      }
+  }
+}

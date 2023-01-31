@@ -58,7 +58,7 @@
         display: flex;
         .speakerLeft {
           img {
-            user-select: none;
+            
             width: 67px;
             height: 67px;
             box-shadow: 0px 8px 30px #00000029;
@@ -69,14 +69,14 @@
           margin-inline-start: 15px;
           .name {
             text-transform: capitalize;
-            user-select: none;
+            
             font-size: 17px;
             font-weight: 600;
             line-height: 24px;
           }
           .position {
             text-transform: capitalize;
-            user-select: none;
+            
             font-size: 17px;
             line-height: 24px;
             font-weight: 500;
@@ -85,7 +85,7 @@
           }
           .company {
             text-transform: capitalize;
-            user-select: none;
+            
             font-size: 17px;
             font-weight: 500;
             color: var(--cg70);
@@ -98,7 +98,7 @@
       margin-top: 50px;
       width: 100%;
       .webinarImage {
-        user-select: none;
+        
         object-fit: cover;
         height: 550px;
         width: 100%;
@@ -219,7 +219,7 @@
         }
         .registerBtn {
           cursor: pointer;
-          user-select: none;
+          
           font-size: 17px;
           text-align: center;
           color: white;

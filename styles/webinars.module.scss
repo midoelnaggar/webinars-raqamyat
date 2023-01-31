@@ -20,7 +20,7 @@
 
       .left {
         .title {
-          user-select: none;
+          
           font-size: 19px;
           font-weight: 700;
           line-height: 21px;
@@ -35,7 +35,7 @@
               padding: 5px 15px 5px 5px;
               background-color: black;
               color: white;
-              user-select: none;
+              
               font-size: 28px;
               letter-spacing: -1.26;
               line-height: 31px;
@@ -46,14 +46,14 @@
       }
       .right {
         a {
-          user-select: none;
+          
           font-size: 17px;
           line-height: 19px;
           font-weight: 500;
           display: flex;
           align-items: flex-end;
           img {
-            user-select: none;
+            
             margin-left: 5px;
             height: 17px;
           }
@@ -68,7 +68,7 @@
       .left {
         position: relative;
         .webinarImage {
-          user-select: none;
+          
           object-fit: cover;
           width: 780px;
           height: 431px;
@@ -136,7 +136,7 @@
           display: flex;
           .speakerLeft {
             img {
-              user-select: none;
+              
               width: 67px;
               height: 67px;
               box-shadow: 0px 8px 30px #00000029;
@@ -147,14 +147,14 @@
             margin-inline-start: 15px;
             .name {
               text-transform: capitalize;
-              user-select: none;
+              
               font-size: 17px;
               font-weight: 600;
               line-height: 24px;
             }
             .position {
               text-transform: capitalize;
-              user-select: none;
+              
               font-size: 17px;
               line-height: 24px;
               font-weight: 500;
@@ -163,7 +163,7 @@
             }
             .company {
               text-transform: capitalize;
-              user-select: none;
+              
               font-size: 17px;
               font-weight: 500;
               color: var(--cg70);
@@ -179,7 +179,7 @@
             border: 2px solid var(--c2);
             border-radius: 30px;
             color: var(--c2);
-            user-select: none;
+            
             font-size: 17px;
             font-weight: 500;
           }
@@ -259,7 +259,7 @@
         display: flex;
         .speakerLeft {
           img {
-            user-select: none;
+            
             width: 67px;
             height: 67px;
             box-shadow: 0px 8px 30px #00000029;
@@ -270,14 +270,14 @@
           margin-inline-start: 15px;
           .name {
             text-transform: capitalize;
-            user-select: none;
+            
             font-size: 17px;
             font-weight: 600;
             line-height: 24px;
           }
           .position {
             text-transform: capitalize;
-            user-select: none;
+            
             font-size: 17px;
             line-height: 24px;
             font-weight: 500;
@@ -286,7 +286,7 @@
           }
           .company {
             text-transform: capitalize;
-            user-select: none;
+            
             font-size: 17px;
             font-weight: 500;
             color: var(--cg70);
@@ -302,7 +302,7 @@
           border: 2px solid var(--c2);
           border-radius: 30px;
           color: var(--c2);
-          user-select: none;
+          
           font-size: 17px;
           font-weight: 500;
         }

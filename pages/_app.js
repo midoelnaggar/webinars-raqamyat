@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import "../styles/globals.scss";
 import axios from "axios";
 import moment from "moment";
+import { useRouter } from "next/router";
 
 
 
@@ -13,6 +14,7 @@ export default function App({ Component, pageProps }) {
   const [upcomingWebinars, setUpcomingWebinars] = useState([]);
   const [pastWebinars, setPastWebinars] = useState([]);
   const [featuredWebinar, setFeaturedWebinar] = useState({});
+  const router = useRouter();
 
   useEffect(() => {
     const getWebinars = async () => {
@@ -50,7 +52,7 @@ export default function App({ Component, pageProps }) {
 
   
   return (
-    <div className="app">
+    <div style={{backgroundColor:router.asPath === "/apply" ? "#EAF3FF":"white"}} className="app">
       <Head>
         <title>Raqamyat Webinars</title>
         <meta
@@ -61,7 +63,7 @@ export default function App({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         ></link>
       </Head>
       <Header />
