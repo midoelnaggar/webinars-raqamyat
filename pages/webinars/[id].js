@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { CircleLoader } from "react-spinners";
+import { ScaleLoader } from "react-spinners";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import styles from "../../styles/Webinar.module.scss";
@@ -37,7 +37,7 @@ function Webinar({ webinars,pastWebinars }) {
         className={styles.loading}
         style={{ display: loading ? "flex" : "none" }}
       >
-        <CircleLoader color="#00a4f8" />
+        <ScaleLoader color="#00a4f8" />
       </div>
       <div className={styles.webinarPage}>
         <div className={styles.top}>

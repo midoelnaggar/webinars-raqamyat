@@ -1,5 +1,6 @@
 .applyPage {
   padding-inline: 270px;
+
   .top {
     .title {
       
@@ -92,13 +93,12 @@
   }
   .bottom {
     margin-bottom: 100px;
-    background-color: #EAF3FF;
     .applyForm {
+      position: relative;
       background-image: url("/img/shapes7.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: 80%;
-      width: 100%;
       padding: 40px;
       background-color: white;
       box-shadow: 0px 3px 48px #e1edffc7;
@@ -154,8 +154,7 @@
           color: var(--c2);
         }
       }
-    }
-    .applyBtn {
+      .applyBtn {
         margin-top: 20px;
         cursor: pointer;
         
@@ -168,5 +167,60 @@
         border-radius: 40px;
         padding: 20px 80px;
       }
+      .submittingOverlay{
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba($color: #ffffff, $alpha: 0.5);
+        border-radius: 18px;
+      }
+    }
+
+    .thankyou{
+      display: flex;
+      justify-content: space-between;
+      background-image: url("/img/shapes7.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+      margin-inline: 125px;
+      background-size: 80%;
+      padding: 50px;
+      background-color: white;
+      box-shadow: 0px 3px 48px #e1edffc7;
+      border-radius: 18px;
+      transition: opacity 1s;
+
+
+      .imageContainer {
+
+      }
+
+      .message {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 550px;
+        .title {
+          color: #2A2A2A;
+          font-size: 22px;
+          font-weight: 600;
+          line-height: 25px;
+          margin-bottom: 20px;
+        }
+        .subtitle {
+          color: #A1A1A1;
+          font-size: 17px;
+          line-height: 23px;
+          letter-spacing: -0.56px;
+
+        }
+      }
+
+    }
   }
 }

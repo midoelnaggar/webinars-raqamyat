@@ -6,7 +6,6 @@
   width: calc(100% - 552px);
   display: flex;
   align-items: center;
-
   .left {
     flex: 40%;
     color: var(--cg60);
@@ -22,7 +21,7 @@
         position: absolute;
         bottom: 0;
         left: 50%;
-        transform: translate(-50%,50%);
+        transform: translate(-50%, 50%);
         width: 12px;
         height: 3px;
         background-color: var(--c2);
@@ -65,14 +64,119 @@
       border: none;
       background-color: white;
       border-radius: 50%;
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 25px;
+        height: 22px;
+      }
     }
-    img {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 22px;
-      height: 22px;
+    .searchBtn:focus {
+      outline: none;
+    }
+  }
+}
+.searchContainer {
+
+  position: absolute;
+  -webkit-backdrop-filter: blur(50px);
+  backdrop-filter: blur(50px);
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 6;
+  .search {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    padding: 50px 60px;
+    transform: translate(-50%);
+    width: calc(100% - 552px);
+    z-index: 5;
+
+    .inputAndButton {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      input {
+        width: 100%;
+        padding: 21px 90px 21px 30px;
+        border-radius: 30px;
+        border: none;
+        font-size: 17px;
+        line-height: 18px;
+        transition: all 0.2s;
+      }
+      input:focus {
+        outline: none;
+      }
+      button {
+        cursor: pointer;
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        border: none;
+        background-color: white;
+        border-radius: 50%;
+        box-shadow: 0px 6px 48px #e1edff;
+        border: 1px solid #e1edff;
+
+        img {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 25px;
+          height: 22px;
+          transition: all 0.25s;
+          transform-origin: top left;
+
+        }
+      }
+      button:focus {
+        outline: none;
+      }
+    }
+
+    .suggestedNames {
+      margin-top: 15px;
+      .suggestedName {
+        margin-bottom: 5px;
+        padding: 15px 30px;
+        background-color: white;
+        font-size: 32px;
+        line-height: 36px;
+        font-weight: 600;
+        letter-spacing: -0.8px;
+        border-radius: 30px;
+        width: fit-content;
+        cursor: pointer;
+        display: flex;
+        align-items: baseline;
+        transition: scale 0.2s;
+        transition-delay: 0.2s;
+        img {
+          margin-left: 5px;
+          height: 20px;
+        }
+      }
+    }
+    .noResults {
+      margin-top: 107px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 38px;
+      line-height: 41px;
+      font-weight: 500;
+      img {
+        height: 64px;
+        margin-bottom: 20px;
+      }
     }
   }
 }

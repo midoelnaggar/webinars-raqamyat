@@ -6,10 +6,10 @@ import "../styles/globals.scss";
 import axios from "axios";
 import moment from "moment";
 import { useRouter } from "next/router";
-
-
+import { SnackbarProvider } from "notistack"
 
 export default function App({ Component, pageProps }) {
+  const [searching, setSearching] = useState(false);
   const [webinars, setWebinars] = useState([]);
   const [upcomingWebinars, setUpcomingWebinars] = useState([]);
   const [pastWebinars, setPastWebinars] = useState([]);
@@ -52,6 +52,7 @@ export default function App({ Component, pageProps }) {
 
   
   return (
+    <SnackbarProvider>
     <div style={{backgroundColor:router.asPath === "/apply" ? "#EAF3FF":"white"}} className="app">
       <Head>
         <title>Raqamyat Webinars</title>
@@ -66,11 +67,12 @@ export default function App({ Component, pageProps }) {
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         ></link>
       </Head>
-      <Header />
+      <Header webinars={webinars} searching={searching} setSearching={setSearching} />
       <div className="outlet">
         <Component webinars={webinars} featuredWebinar={featuredWebinar} pastWebinars={pastWebinars} upcomingWebinars={upcomingWebinars} {...pageProps} />
       </div>
       <Footer />
     </div>
+    </SnackbarProvider>
   );
 }
