@@ -22,7 +22,7 @@ function PastWebinars({pastWebinars}) {
         pastWebinars.map((webinar, index) => {
           return (
             <SwiperSlide key={index} className={styles.slide}>
-              <div className={styles.card}>
+              <div style={{cursor:pastWebinars?.length > 1 ? "grab":"default"}} className={styles.card}>
                 <div className={styles.dateAndTime}>
                   <DateRangeIcon
                     className={styles.icon}

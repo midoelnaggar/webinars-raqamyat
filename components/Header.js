@@ -3,12 +3,12 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import styles from "../styles/Header.module.scss";
 
-export default function Header({ searching, setSearching, webinars }) {
+export default function Header({ searchModalOpen, setSearchModalOpen, webinars }) {
   const [search, setSearch] = useState("");
   const { asPath, push } = useRouter();
   const escapeSearch = useCallback((e) => {
     if (e.key === "Escape") {
-      setSearching(false);
+      setSearchModalOpen(false);
     }
   }, []);
 
@@ -18,6 +18,15 @@ export default function Header({ searching, setSearching, webinars }) {
       document.removeEventListener("keydown", escapeSearch);
     };
   }, [escapeSearch]);
+
+  useEffect(() => {
+    if (searchModalOpen) {
+    document.body.style.overflowY = "hidden"
+  }
+  else {
+    document.body.style.overflowY = "unset"
+  }
+  }, [searchModalOpen]);
 
   const handleSearch = () => {};
 
@@ -56,7 +65,10 @@ export default function Header({ searching, setSearching, webinars }) {
             Apply For Free
           </button>
           <button
-            onClick={() => setSearching(!searching)}
+            onClick={() => {
+              setSearchModalOpen(true);
+              setSearch("");
+            }}
             className={styles.searchBtn}
           >
             <img src="/img/search.svg" alt="search" />
@@ -64,43 +76,35 @@ export default function Header({ searching, setSearching, webinars }) {
         </div>
       </div>
       <div
-        id="searchContainer"
+        id="searchModal"
         style={
-          !searching
+          !searchModalOpen
             ? {
+              overflow:"hidden",
                 width: "0",
                 height: "0",
                 padding: "0",
                 margin: "0",
                 opacity: "0",
-                backdropFilter:"blur(0px)",
-                WebkitBackdropFilter:"blur(0px)",
+                backdropFilter: "blur(0px)",
+                WebkitBackdropFilter: "blur(0px)",
               }
-            : {
-              backdropFilter:"blur(50px)",
-              WebkitBackdropFilter:"blur(50px)",
-
-            }
+            : {}
         }
-        className={styles.searchContainer}
+        className={styles.searchModal}
       >
-        <div
-          onClick={() => setSearching(false)}
-          style={{
-            position: "absolute",
-            height: "100%",
-            width: "100%",
-            left: "0",
-            top: "0",
-          }}
-        />
+       
         <div className={styles.search}>
+        <div
+          className={styles.clickable}
+          onClick={() => setSearchModalOpen(false)}
+        />
           <div className={styles.inputAndButton}>
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               style={
-                !searching
+                !searchModalOpen
                   ? {
                       width: "20%",
                     }
@@ -108,10 +112,10 @@ export default function Header({ searching, setSearching, webinars }) {
               }
               placeholder="Search by webinar name"
             />
-            <button onClick={() => setSearching(false)}>
+            <button onClick={() => setSearchModalOpen(false)}>
               <img
                 style={
-                  !searching
+                  !searchModalOpen
                     ? {
                         scale: "0",
                       }
@@ -124,7 +128,7 @@ export default function Header({ searching, setSearching, webinars }) {
               />
               <img
                 style={
-                  !searching
+                  !searchModalOpen
                     ? {
                         scale: "1",
                       }
@@ -145,7 +149,7 @@ export default function Header({ searching, setSearching, webinars }) {
                     onClick={() => setSearch(webinar?.name)}
                     className={styles.suggestedName}
                     style={
-                      !searching
+                      !searchModalOpen
                         ? {
                             scale: "0",
                           }
@@ -160,10 +164,7 @@ export default function Header({ searching, setSearching, webinars }) {
                 );
               })}
           </div>
-          <div
-            onClick={() => setSearching(!searching)}
-            className={styles.noResults}
-          >
+          <div className={styles.noResults}>
             <img src="/img/noResults.svg" alt="noResults" />
             No Results Found
           </div>

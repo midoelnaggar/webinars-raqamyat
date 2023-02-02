@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { TextField } from "@mui/material";
+import { MuiTelInput } from "mui-tel-input";
 import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 import DateRangeIcon from "@mui/icons-material/DateRange";
@@ -11,6 +13,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import PastWebinars from "../components/PastWebinars";
+import { ScaleLoader } from "react-spinners";
 
 const feedbacks = [
   {
@@ -58,7 +61,17 @@ export default function Home({
   featuredWebinar,
 }) {
   const [openCalendar, setOpenCalendar] = useState(false);
+  const [subscribeModalOpen, setSubscribeModalOpen] = useState(false);
+  const [subscribing, setSubscribing] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
 
+  useEffect(() => {
+    if (subscribeModalOpen) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "unset";
+    }
+  }, [subscribeModalOpen]);
   const getLogos = () => {
     const logos = [];
     for (let i = 1; i <= 15; i++) {
@@ -72,11 +85,6 @@ export default function Home({
     }
     return logos;
   };
-
-  const handleCalendarBtn = () => {
-    setOpenCalendar(!openCalendar);
-  };
-
   useEffect(() => {
     if (webinars?.length > 0) {
       markDays();
@@ -179,14 +187,22 @@ export default function Home({
                   )}
                 </div>
               </div>
-              <div className="tooltipTitle">
-                {webinars[b]?.name}
-              </div>
+              <div className="tooltipTitle">{webinars[b]?.name}</div>
             </Link>
           );
         }
       }
     }
+  };
+  const handleCalendarBtn = () => {
+    setOpenCalendar(!openCalendar);
+  };
+  const handleSubscribeButton = () => {
+    setSubscribing(true);
+    setTimeout(() => {
+      setSubscribing(false);
+      setSubscribed(true);
+    }, 3000);
   };
 
   return (
@@ -226,7 +242,7 @@ export default function Home({
             }
           />
         </div>
-        <div className={styles.calendarBtn} onClick={handleCalendarBtn}>
+        <div className={styles.calendarBtn} onClick={handleCalendarBtn} st>
           <div className={styles.left}>
             <DateRangeIcon
               className={styles.calendarIcon}
@@ -367,7 +383,13 @@ export default function Home({
               upcomingWebinars.map((webinar, index) => {
                 return (
                   <SwiperSlide key={index} className={styles.slide}>
-                    <div className={styles.card}>
+                    <div
+                      style={{
+                        cursor:
+                          upcomingWebinars?.length > 1 ? "grab" : "default",
+                      }}
+                      className={styles.card}
+                    >
                       <div className={styles.dateAndTime}>
                         <DateRangeIcon
                           className={styles.icon}
@@ -414,7 +436,7 @@ export default function Home({
               })}
           </Swiper>
         </div>
-              <PastWebinars pastWebinars={pastWebinars} />
+        <PastWebinars pastWebinars={pastWebinars} />
         <div className={styles.feedbacks}>
           <Swiper
             pagination={true}
@@ -482,7 +504,12 @@ export default function Home({
             We are online Join the Conversation
           </div>
           <div className={styles.subtitle}>Subscribe To Raqamyat Webinar</div>
-          <button className={styles.subscribeBtn}>SUBSCRIBE</button>
+          <button
+            onClick={() => setSubscribeModalOpen(true)}
+            className={styles.subscribeBtn}
+          >
+            SUBSCRIBE
+          </button>
         </div>
         <div className={styles.clients}>
           <div className={styles.title}>Our Respected Clients</div>
@@ -495,6 +522,101 @@ export default function Home({
             </div>
           </div>
           <div className={styles.clientLogos}>{getLogos()}</div>
+        </div>
+      </div>
+      <div
+        className={styles.subscribingModal}
+        style={
+          subscribeModalOpen
+            ? {}
+            : {
+                overflow: "hidden",
+                width: "0",
+                height: "0",
+                padding: "0",
+                margin: "0",
+                opacity: "0",
+                backdropFilter: "blur(0px)",
+                WebkitBackdropFilter: "blur(0px)",
+              }
+        }
+      >
+        <div
+          className={styles.clickable}
+          onClick={() => setSubscribeModalOpen(false)}
+        />
+
+        <div
+          style={
+            !subscribeModalOpen || subscribed
+              ? {
+                  scale: "0",
+                }
+              : {
+                  scale: "1",
+                }
+          }
+          className={styles.subscribeForm}
+        >
+          <div className={styles.title}>Subscribe To Raqamyat Webinar</div>{" "}
+          <div className={styles.inputContainer}>
+            <TextField fullWidth />
+            <label>Name</label>
+          </div>
+          <div className={styles.inputContainer}>
+            <TextField fullWidth className={styles.input} />
+            <label>Email</label>
+          </div>
+          <div className={styles.inputContainer}>
+            <MuiTelInput fullWidth defaultCountry="EG" />
+            <label>WhatsApp</label>
+          </div>
+          <div className={styles.message}>
+            By registering, you confirm that you have read and agree to the
+            <Link href="/"> Event Terms of Service</Link> and that you agree to
+            the processing of your personal data by Salesforce as described in
+            the <Link href="/">Privacy Statement</Link>.
+          </div>
+          <button
+            onClick={handleSubscribeButton}
+            className={styles.registerBtn}
+          >
+            Subscribe
+          </button>
+          <div
+            style={{ display: subscribing ? "flex" : "none" }}
+            className={styles.subscribingOverlay}
+          >
+            <ScaleLoader color="#00a4f8" />
+          </div>
+        </div>
+        <div
+          style={
+            subscribed
+              ? {
+                  scale: "1",
+                }
+              : {
+                  scale: "0",
+                }
+          }
+          className={styles.thankYou}
+        >
+          <div className={styles.imageContainer}>
+            <img src="/img/subscribed.svg" alt="subscribed" />
+          </div>
+          <div className={styles.message}>
+            <div className={styles.title}>THANK YOU FOR SUBSCRIBING</div>
+            <div className={styles.subtitle}>
+            By registering, you’ve opened the eCommerce Gate of Knowledge, and you will be learning from the top experts in MENA.
+            </div>
+            <button
+            onClick={()=>setSubscribeModalOpen(false)}
+            className={styles.continueuBtn}
+          >
+            Continue
+          </button>
+          </div>
         </div>
       </div>
     </>

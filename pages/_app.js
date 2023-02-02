@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -6,10 +6,10 @@ import "../styles/globals.scss";
 import axios from "axios";
 import moment from "moment";
 import { useRouter } from "next/router";
-import { SnackbarProvider } from "notistack"
+import { SnackbarProvider } from "notistack";
 
 export default function App({ Component, pageProps }) {
-  const [searching, setSearching] = useState(false);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [webinars, setWebinars] = useState([]);
   const [upcomingWebinars, setUpcomingWebinars] = useState([]);
   const [pastWebinars, setPastWebinars] = useState([]);
@@ -50,29 +50,45 @@ export default function App({ Component, pageProps }) {
     }
   }, [webinars]);
 
-  
   return (
-    <SnackbarProvider>
-    <div style={{backgroundColor:router.asPath === "/apply" ? "#EAF3FF":"white"}} className="app">
-      <Head>
-        <title>Raqamyat Webinars</title>
-        <meta
-          name="description"
-          content="If you’re looking for knowledge, then you've arrived at the right place. Here you will find all of our recorded webinars with eCommerce specialists from around the globe to watch whenever you wish."
+      <div
+        style={{
+          backgroundColor: router.asPath === "/apply" ? "#EAF3FF" : "white",
+        }}
+        className="app"
+      >
+            <SnackbarProvider>
+
+        <Head>
+          <title>Raqamyat Webinars</title>
+          <meta
+            name="description"
+            content="If you’re looking for knowledge, then you've arrived at the right place. Here you will find all of our recorded webinars with eCommerce specialists from around the globe to watch whenever you wish."
+          />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="icon" href="/favicon.ico" />
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          ></link>
+        </Head>
+        <Header
+          webinars={webinars}
+          searchModalOpen={searchModalOpen}
+          setSearchModalOpen={setSearchModalOpen}
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-        ></link>
-      </Head>
-      <Header webinars={webinars} searching={searching} setSearching={setSearching} />
-      <div className="outlet">
-        <Component webinars={webinars} featuredWebinar={featuredWebinar} pastWebinars={pastWebinars} upcomingWebinars={upcomingWebinars} {...pageProps} />
+        <div className="outlet">
+          <Component
+            webinars={webinars}
+            featuredWebinar={featuredWebinar}
+            pastWebinars={pastWebinars}
+            upcomingWebinars={upcomingWebinars}
+            {...pageProps}
+          />
+        </div>
+        <Footer />
+        </SnackbarProvider>
+
       </div>
-      <Footer />
-    </div>
-    </SnackbarProvider>
   );
 }

@@ -20,13 +20,13 @@ function apply() {
 
   const handleApply = () => {
     if (!materialRef.current.checked || !nonpaidRef.current.checked) {
-      if (!materialRef.current.checked) {
-        enqueueSnackbar("You should agree to prepare their own material", {
+      if (!nonpaidRef.current.checked) {
+        enqueueSnackbar("You should agree to conduct a non-paid webinars", {
           variant: "warning",
         });
       }
-      if (!nonpaidRef.current.checked) {
-        enqueueSnackbar("You should agree to conduct a non-paid webinars", {
+      if (!materialRef.current.checked) {
+        enqueueSnackbar("You should agree to prepare their own material", {
           variant: "warning",
         });
       }

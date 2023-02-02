@@ -10,9 +10,13 @@ import { MuiTelInput } from "mui-tel-input";
 import Link from "next/link";
 import PastWebinars from "../../components/PastWebinars";
 
-function Webinar({ webinars,pastWebinars }) {
+function Webinar({ webinars, pastWebinars }) {
   const [webinar, setWebinar] = useState({});
   const [loading, setLoading] = useState(true);
+  const [registeredModalOpen, setRegisteredModalOpen] = useState(false);
+  const [registering, setRegistering] = useState(false);
+  const [registered, setRegistered] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -31,6 +35,28 @@ function Webinar({ webinars,pastWebinars }) {
     }
   }, [webinar]);
 
+  useEffect(() => {
+    if (registered) {
+      setRegisteredModalOpen(true);
+    }
+  }, [registered]);
+  
+  useEffect(() => {
+    if (registeredModalOpen) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "unset";
+    }
+  }, [registeredModalOpen]);
+
+  const handleRegisterButton = () => {
+    setRegistering(true);
+    setTimeout(() => {
+      setRegistering(false);
+      setRegisteredModalOpen(true);
+      setRegistered(true);
+    }, 3000);
+  };
   return (
     <>
       <div
@@ -119,17 +145,77 @@ function Webinar({ webinars,pastWebinars }) {
               </div>
               <div className={styles.message}>
                 By registering, you confirm that you have read and agree to the
-                <Link href=""> Event Terms of Service</Link> and that you agree
+                <Link href="/"> Event Terms of Service</Link> and that you agree
                 to the processing of your personal data by Salesforce as
-                described in the <Link href="">Privacy Statement</Link>.
+                described in the <Link href="/">Privacy Statement</Link>.
               </div>
-              <button className={styles.registerBtn}>
-              Register For Free
+              <button
+                onClick={handleRegisterButton}
+                className={styles.registerBtn}
+              >
+                Register For Free
               </button>
+              <div
+                style={{ display: registering ? "flex" : "none" }}
+                className={styles.registeringOverlay}
+              >
+                <ScaleLoader color="#00a4f8" />
+              </div>
             </div>
           </div>
         </div>
         <PastWebinars pastWebinars={pastWebinars} />
+      </div>
+      <div
+        className={styles.registeredModal}
+        style={
+          registeredModalOpen
+            ? {}
+            : {
+                overflow: "hidden",
+                width: "0",
+                height: "0",
+                padding: "0",
+                margin: "0",
+                opacity: "0",
+                backdropFilter: "blur(0px)",
+                WebkitBackdropFilter: "blur(0px)",
+              }
+        }
+      >
+        <div
+          className={styles.clickable}
+          onClick={() => setRegisteredModalOpen(false)}
+        />
+        <div
+          style={
+            registered
+              ? {
+                  scale: "1",
+                }
+              : {
+                  scale: "0",
+                }
+          }
+          className={styles.thankYou}
+        >
+          <div className={styles.imageContainer}>
+            <img src="/img/subscribed.svg" alt="subscribed" />
+          </div>
+          <div className={styles.message}>
+            <div className={styles.title}>THANK YOU FOR SUBSCRIBING</div>
+            <div className={styles.subtitle}>
+              By registering, you’ve opened the eCommerce Gate of Knowledge, and
+              you will be learning from the top experts in MENA.
+            </div>
+            <button
+              onClick={() => setRegisteredModalOpen(false)}
+              className={styles.continueuBtn}
+            >
+              Continue
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
