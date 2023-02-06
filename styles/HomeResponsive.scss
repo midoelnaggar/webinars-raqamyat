@@ -1,0 +1,359 @@
+ .app {
+    @media (max-width:768px) {
+       width: 768px;
+    }
+ }
+
+
+
+ .outlet {
+    @media (max-width:768px) {
+       padding-block: 240px;
+       padding-bottom: 0;
+       background-size: 275%;
+       background-position: right 30% top;
+       
+    }
+
+    @media (max-width:600px) {
+       padding-block: 120px;
+       padding-bottom: 0;
+    }
+ }
+
+ .home {
+    @media (max-width:768px) {
+       .hero {
+
+          .chart,
+          .live,
+          .mic,
+          .ccard {
+             display: none;
+          }
+
+          .shapes {
+             left: -65%;
+             right: 20px !important;
+             width: 90% !important;
+          }
+
+          .title {
+             font-size: 73px;
+             letter-spacing: 0;
+             line-height: 75px;
+             text-align: left;
+             margin-bottom: 30px;
+          }
+
+       }
+
+       .calendarBtn {
+          width: 60px;
+          background-color: transparent;
+          bottom: 40px;
+          right: 0;
+          left: 50%;
+          transform: translate(-50%, 0%);
+
+          .right {
+             display: none;
+          }
+       }
+
+       .calendar {
+          left: 0%;
+          right: 0;
+          margin: auto;
+       }
+
+       .featuredWebinar {
+          padding-inline: 0;
+          padding: 0 40px;
+
+          .top {
+             flex-direction: column;
+             height: auto;
+
+             .left {
+                .webinarImage {
+                   width: 100%;
+                }
+
+             }
+
+             .right {
+                width: auto;
+                margin-top: -160px;
+                position: relative;
+             }
+          }
+
+          .bottom {
+             display: block;
+
+             .right {
+                display: flex;
+                justify-content: end;
+                margin: 10px 0;
+             }
+          }
+       }
+
+       .parteners {
+          width: auto;
+       }
+
+       //upcomingWebinars
+       .upcomingWebinars {
+          margin-top: 52px;
+          padding-block: 0;
+
+          .upcomingWebinarsBg {
+             left: 0;
+             transform: translate(-60%, -53%);
+          }
+
+          .header {
+             position: unset;
+             margin-inline-start: 0;
+             padding: 30px 38px;
+          }
+       }
+
+       .swiper-button-next {
+          right: 0 !important;
+       }
+
+       .feedbacks {
+          flex-direction: column-reverse;
+          padding: 40px 38px;
+
+          .start {
+             width: 100%;
+             margin-top: 50px;
+          }
+
+          .end {
+             line-height: 27px;
+          }
+       }
+
+       .subscribe {
+          padding: 50px 38px;
+          margin-inline: 0;
+
+          .title {
+             font-size: 16px;
+          }
+
+          .subtitle {
+             font-size: 23px;
+             letter-spacing: 0px;
+             line-height: 32px;
+             text-align: center;
+          }
+       }
+
+       .clients {
+          padding: 50px 38px;
+          padding-bottom: 12px;
+
+          .title {
+             font-size: 16px;
+          }
+
+          .subtitle {
+             div {
+                span {
+                   font-size: 16px;
+                   line-height: 14px;
+                }
+             }
+          }
+
+          .clientLogos {
+             display: flex;
+             flex-wrap: wrap;
+
+             .clientLogo {
+                width: 50%;
+                margin-bottom: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+             }
+          }
+       }
+ .feedbacks {
+     .start {
+   
+       .feedback {
+     
+          .feedbackContainer {
+            
+             .title {
+                font-size: 16px;
+                letter-spacing: 0;
+                line-height: 24px;
+          }
+             .feedbacker {
+                .feedbackerLeft {
+                   img {
+                      width: 50px;
+                      height: 50px;
+                   }
+                }
+
+                .feedbackerRight {
+                    .name {
+                      font-size: 14px;
+                   }
+                   .position {
+                      font-size: 14px;
+                   }
+                   .company {
+                      font-size: 16px;
+                   }
+                }
+             }
+          }
+       }
+    }
+
+ 
+ }
+    }
+
+    @media (max-width:600px) {
+       .hero {
+          align-items: flex-start;
+          text-align: left;
+          padding: 0px 38px;
+          margin-bottom: 180px;
+
+          .chart,
+          .live,
+          .mic,
+          .ccard {
+             display: none;
+          }
+
+          .shapes {
+             right: 0;
+             left: unset;
+             width: 100%;
+          }
+
+          .title {
+             font-size: 63px;
+          }
+
+          .subtitle {
+             text-align: left;
+             font-size: 12px;
+             line-height: 14px;
+             font-weight: 500;
+             letter-spacing: 0px;
+             color: #616161;
+          }
+
+          .registerBtn {
+             margin-top: 20px;
+             width: auto;
+             height: auto;
+             padding: 22px 24px;
+          }
+       }
+
+       .calendar {
+          left: 0%;
+          right: 0;
+          margin: auto;
+       }
+
+       .parteners {
+          width: 100%;
+          padding-inline: 0;
+          height: 63px;
+
+          img {
+             width: 60px;
+             padding: 5px;
+             margin-inline: 5px;
+          }
+       }
+
+       //  
+       .featuredWebinar {
+          padding: 0 25px;
+
+          .featuredWebinarBg {
+             width: auto;
+          }
+
+          .top {
+             .right {
+                .title {
+                   font-size: 24px;
+                   line-height: 24px;
+                }
+
+                .register {
+                   .btn {
+                      padding: 10px 30px;
+                   }
+                }
+             }
+
+             .speaker {
+                .speakerLeft {
+                   img {
+                      width: 50px;
+                      height: 50px;
+                   }
+                }
+
+                .speakerRight {
+
+                   .name,
+                   .position {
+                      font-size: 15px !important;
+                      line-height: 19px !important;
+                   }
+                }
+             }
+          }
+       }
+    }
+
+    @media (max-width:420px) {
+       .hero {
+          .title {
+             font-size: 58px;
+             line-height: 54px;
+          }
+       }
+
+       .parteners {
+          img {
+             width: 50px;
+             padding: 5px;
+             margin-inline: 5px;
+             height: auto;
+          }
+       }
+    }
+
+    @media (max-width:360px) {
+       .hero {
+          .title {
+             font-size: 50px;
+          }
+       }
+    }
+ }
+
+
+
+ 

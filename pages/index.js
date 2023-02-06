@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { createRoot } from "react-dom/client";
 import { TextField } from "@mui/material";
 import { MuiTelInput } from "mui-tel-input";
 import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import { Calendar } from "react-calendar";
 import moment from "moment";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
@@ -14,6 +12,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import PastWebinars from "../components/PastWebinars";
 import { ScaleLoader } from "react-spinners";
+import { useRouter } from "next/router";
 
 const feedbacks = [
   {
@@ -55,16 +54,14 @@ const feedbacks = [
 ];
 
 export default function Home({
-  webinars,
   upcomingWebinars,
   pastWebinars,
   featuredWebinar,
 }) {
-  const [openCalendar, setOpenCalendar] = useState(false);
   const [subscribeModalOpen, setSubscribeModalOpen] = useState(false);
   const [subscribing, setSubscribing] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
-
+  const router = useRouter();
   useEffect(() => {
     if (subscribeModalOpen) {
       document.body.style.overflowY = "hidden";
@@ -85,118 +82,7 @@ export default function Home({
     }
     return logos;
   };
-  useEffect(() => {
-    if (webinars?.length > 0) {
-      markDays();
-      setOpenCalendar(true);
-    }
-  }, [webinars]);
 
-  const markDays = () => {
-    const days = document.getElementsByClassName(
-      "react-calendar__month-view__days__day"
-    );
-    for (let b = 0; b < webinars?.length; b++) {
-      for (let c = 0; c < days.length; c++) {
-        if (
-          moment(days[c]?.firstChild?.ariaLabel, "MMMM D[,] YYYY").format(
-            "DD-MM-YYYY"
-          ) === moment(webinars[b]?.date, "DD-MM-YYYY").format("DD-MM-YYYY")
-        ) {
-          const a = document.createElement("span");
-          a.className = "tag";
-          if (
-            moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isSame(
-              moment(),
-              "day"
-            )
-          ) {
-            a.style.backgroundColor = "#FF3939";
-          } else if (
-            moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isAfter(moment())
-          ) {
-            a.style.backgroundColor = "#00A4F8";
-          } else if (
-            moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isBefore(moment())
-          ) {
-            a.style.backgroundColor = "#707070";
-          }
-          const tooltipContainer = document.createElement("div");
-          tooltipContainer.style.visibility = "hidden";
-          tooltipContainer.className = "tooltipContainer";
-          days[c].name = "hasWebinar";
-          days[c].autofocus = false;
-          days[c].appendChild(a);
-          days[c].addEventListener("click", (e) => {
-            if (tooltipContainer.style.visibility === "hidden") {
-              tooltipContainer.style.visibility = "visible";
-            } else {
-              tooltipContainer.style.visibility = "hidden";
-            }
-          });
-          if (!days[c].querySelector(".tooltipContainer")) {
-            days[c].appendChild(tooltipContainer);
-          }
-          const root = createRoot(tooltipContainer);
-          root.render(
-            <Link className="tooltip" href={`/webinars/${webinars[b]?.id}`}>
-              <div className="tooltipStatus">
-                {moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isSame(
-                  moment(),
-                  "day"
-                ) && (
-                  <>
-                    <span style={{ backgroundColor: "#FF3939" }} />{" "}
-                    <div>Live Webinar</div>{" "}
-                  </>
-                )}
-                {moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isAfter(
-                  moment(),
-                  "day"
-                ) && (
-                  <>
-                    <span style={{ backgroundColor: "#00A4F8" }} />{" "}
-                    <div>Upcoming Webinar</div>{" "}
-                  </>
-                )}
-                {moment(moment(webinars[b]?.date, "DD-MM-YYYY")).isBefore(
-                  moment(),
-                  "day"
-                ) && (
-                  <>
-                    <span style={{ backgroundColor: "#707070" }} />{" "}
-                    <div>Past Webinar</div>{" "}
-                  </>
-                )}
-              </div>
-              <div className="tooltiDateAndTime">
-                <DateRangeIcon
-                  className="icon"
-                  fontSize="14px"
-                  htmlColor="#707070"
-                />
-                <div className="date">
-                  {moment(webinars[b]?.date, "DD-MM-YYYY").format(
-                    "DD MMM[.] YYYY"
-                  )}
-                </div>
-                |
-                <div className="time">
-                  {moment(webinars[b]?.date, "DD-MM-YYYY hh:mm:ss").format(
-                    "hh[:]mm A"
-                  )}
-                </div>
-              </div>
-              <div className="tooltipTitle">{webinars[b]?.name}</div>
-            </Link>
-          );
-        }
-      }
-    }
-  };
-  const handleCalendarBtn = () => {
-    setOpenCalendar(!openCalendar);
-  };
   const handleSubscribeButton = () => {
     setSubscribing(true);
     setTimeout(() => {
@@ -208,50 +94,6 @@ export default function Home({
   return (
     <>
       <div className={styles.home}>
-        <div
-          style={{
-            visibility: openCalendar ? "visible" : "hidden",
-            bottom: openCalendar ? "100px" : "-477px",
-            opacity: openCalendar ? 1 : 0,
-          }}
-          className={styles.calendar}
-        >
-          <div className={styles.calendarTitle}>
-            <div>
-              <span style={{ backgroundColor: "#707070" }} />
-              <div>Past</div>
-            </div>
-            <div>
-              <span style={{ backgroundColor: "#FF3939" }} />
-              <div>Live</div>
-            </div>
-            <div>
-              <span style={{ backgroundColor: "#00A4F8" }} />
-              <div>Upcoming</div>
-            </div>
-          </div>
-          <Calendar
-            onActiveStartDateChange={markDays}
-            calendarType="Hebrew"
-            formatShortWeekday={(locale, date) => moment(date).format("dd")}
-            nextLabel={
-              <img className="navIcon" src="/img/next.svg" alt="next" />
-            }
-            prevLabel={
-              <img className="navIcon" src="/img/prev.svg" alt="prev" />
-            }
-          />
-        </div>
-        <div className={styles.calendarBtn} onClick={handleCalendarBtn} st>
-          <div className={styles.left}>
-            <DateRangeIcon
-              className={styles.calendarIcon}
-              htmlColor="#00A4F8"
-            />
-          </div>
-
-          <div className={styles.right}>Webinars Calendar</div>
-        </div>
         <div className={styles.hero}>
           <img className={styles.shapes} src="/img/shapes.svg" alt="shapes" />
           <img className={styles.chart} src="/img/chart.svg" alt="chart" />
@@ -283,6 +125,7 @@ export default function Home({
               <img
                 className={styles.webinarImage}
                 src={featuredWebinar?.image}
+                onError={(e) => (e.target.src = "/img/fallbackWebinars.jpg")}
                 alt="webinarImage"
               />
               <div className={styles.watchNowBtn}>
@@ -291,18 +134,16 @@ export default function Home({
                   src="/img/play.svg"
                   alt="play"
                 />
-                Watch Now{" "}
+                Watch Now
               </div>
             </div>
             <div className={styles.right}>
               <div className={styles.status}>
-                {moment(moment(featuredWebinar?.date, "DD-MM-YYYY")).isAfter(
-                  moment()
-                )
-                  ? "Upcoming Webinar"
-                  : moment(
-                      moment(featuredWebinar?.date, "DD-MM-YYYY")
-                    ).isBefore(moment()) && "Last Webinar"}
+                {featuredWebinar?.type === "upcoming"
+                  && "Upcoming Webinar"}
+                  {featuredWebinar?.type === "past" && "Last Webinar"}
+                  {featuredWebinar?.type === "live" && "Live Webinar"}
+
               </div>
               <div className={styles.dateAndTime}>
                 <DateRangeIcon
@@ -327,7 +168,7 @@ export default function Home({
                 <div className={styles.speakerLeft}>
                   <img
                     onError={(e) => (e.target.src = "/img/avatar.png")}
-                    src="/img/avatar.png"
+                    src={featuredWebinar?.author?.image}
                     alt="speaker"
                   />
                 </div>
@@ -369,74 +210,97 @@ export default function Home({
             </div>
           </div>
         </div>
-        <div className={styles.upcomingWebinars}>
-          <img src="/img/shapes2.svg" className={styles.upcomingWebinarsBg} />
-          <div className={styles.header}>Upcoming Webinars</div>
-          <Swiper
-            slidesPerView={3}
-            spaceBetween={150}
-            className={styles.swiper}
-            modules={[Navigation]}
-            navigation={true}
-          >
-            {Array.isArray(upcomingWebinars) &&
-              upcomingWebinars.map((webinar, index) => {
-                return (
-                  <SwiperSlide key={index} className={styles.slide}>
-                    <div
-                      style={{
-                        cursor:
-                          upcomingWebinars?.length > 1 ? "grab" : "default",
-                      }}
-                      className={styles.card}
-                    >
-                      <div className={styles.dateAndTime}>
-                        <DateRangeIcon
-                          className={styles.icon}
-                          fontSize="14px"
-                          htmlColor="#707070"
-                        />
-                        <div className={styles.date}>
-                          {moment(webinar?.date, "DD-MM-YYYY").format(
-                            "dddd[,] MMMM Do YYYY"
-                          )}
-                        </div>
-                        |
-                        <div className={styles.time}>
-                          {moment(webinar?.date, "DD-MM-YYYY hh:mm:ss").format(
-                            "hh[:]mm A"
-                          )}
-                        </div>
-                      </div>
-                      <div className={styles.title}>{webinar?.name}</div>
-                      <div className={styles.speaker}>
-                        <div className={styles.speakerLeft}>
-                          <img
-                            onError={(e) => (e.target.src = "/img/avatar.png")}
-                            src={webinar?.author?.image}
-                            alt="speaker"
-                          />
-                        </div>
-                        <div className={styles.speakerRight}>
-                          <div className={styles.name}>{webinar?.speker}</div>
-                          <div className={styles.position}>
-                            {webinar?.position}
+        {Array.isArray(upcomingWebinars) && upcomingWebinars?.length > 0 && (
+          <div className={styles.upcomingWebinars}>
+            <img src="/img/shapes2.svg" className={styles.upcomingWebinarsBg} />
+            <div className={styles.header}>Upcoming Webinars</div>
+            <Swiper
+              slidesPerView={3}
+              spaceBetween={150}
+              className={styles.swiper}
+              modules={[Navigation]}
+              navigation={true}
+            >
+              {Array.isArray(upcomingWebinars) &&
+                upcomingWebinars
+                  .sort((a, b) => {
+                    return (
+                      moment(a?.date, "DD-MM-YYYY hh:mm:ss") -
+                      moment(b?.date, "DD-MM-YYYY hh:mm:ss")
+                    );
+                  })
+                  .map((webinar, index) => {
+                    return (
+                      <SwiperSlide key={index} className={styles.slide}>
+                        <div
+                          style={{
+                            cursor:
+                              upcomingWebinars?.length > 2 ? "grab" : "default",
+                          }}
+                          className={styles.card}
+                        >
+                          <div className={styles.dateAndTime}>
+                            <DateRangeIcon
+                              className={styles.icon}
+                              fontSize="14px"
+                              htmlColor="#707070"
+                            />
+                            <div className={styles.date}>
+                              {moment(webinar?.date, "DD-MM-YYYY").format(
+                                "dddd[,] MMMM Do YYYY"
+                              )}
+                            </div>
+                            |
+                            <div className={styles.time}>
+                              {moment(
+                                webinar?.date,
+                                "DD-MM-YYYY hh:mm:ss"
+                              ).format("hh[:]mm A")}
+                            </div>
                           </div>
-                          <div className={styles.company}>
-                            {webinar?.company}
+                          <div className={styles.title}>{webinar?.name}</div>
+                          <div className={styles.speaker}>
+                            <div className={styles.speakerLeft}>
+                              <img
+                                onError={(e) =>
+                                  (e.target.src = "/img/avatar.png")
+                                }
+                                src={webinar?.author?.image}
+                                alt="speaker"
+                              />
+                            </div>
+                            <div className={styles.speakerRight}>
+                              <div className={styles.name}>
+                                {webinar?.speker}
+                              </div>
+                              <div className={styles.position}>
+                                {webinar?.position}
+                              </div>
+                              <div className={styles.company}>
+                                {webinar?.company}
+                              </div>
+                            </div>
+                          </div>
+                          <div className={styles.register}>
+                            <button
+                              onClick={() =>
+                                router.push(`webinars/${webinar?.slug}`)
+                              }
+                              className={styles.btn}
+                            >
+                              Register Now
+                            </button>
                           </div>
                         </div>
-                      </div>
-                      <div className={styles.register}>
-                        <button className={styles.btn}>Register Now</button>
-                      </div>{" "}
-                    </div>
-                  </SwiperSlide>
-                );
-              })}
-          </Swiper>
-        </div>
-        <PastWebinars pastWebinars={pastWebinars} />
+                      </SwiperSlide>
+                    );
+                  })}
+            </Swiper>
+          </div>
+        )}
+        {Array.isArray(pastWebinars) && pastWebinars?.length > 0 && (
+          <PastWebinars pastWebinars={pastWebinars} />
+        )}
         <div className={styles.feedbacks}>
           <Swiper
             pagination={true}
@@ -452,8 +316,8 @@ export default function Home({
                         className={styles.qs}
                         src="/img/quotes-start.svg"
                         alt="quotes-start"
-                      />{" "}
-                      {feedback?.title}{" "}
+                      />
+                      {feedback?.title}
                       <img
                         className={styles.qe}
                         src="/img/quotes-end.svg"
@@ -558,7 +422,7 @@ export default function Home({
           }
           className={styles.subscribeForm}
         >
-          <div className={styles.title}>Subscribe To Raqamyat Webinar</div>{" "}
+          <div className={styles.title}>Subscribe To Raqamyat Webinar</div>
           <div className={styles.inputContainer}>
             <TextField fullWidth />
             <label>Name</label>
@@ -608,14 +472,15 @@ export default function Home({
           <div className={styles.message}>
             <div className={styles.title}>THANK YOU FOR SUBSCRIBING</div>
             <div className={styles.subtitle}>
-            By registering, you’ve opened the eCommerce Gate of Knowledge, and you will be learning from the top experts in MENA.
+              By registering, you’ve opened the eCommerce Gate of Knowledge, and
+              you will be learning from the top experts in MENA.
             </div>
             <button
-            onClick={()=>setSubscribeModalOpen(false)}
-            className={styles.continueuBtn}
-          >
-            Continue
-          </button>
+              onClick={() => setSubscribeModalOpen(false)}
+              className={styles.continueuBtn}
+            >
+              Continue
+            </button>
           </div>
         </div>
       </div>

@@ -41,6 +41,7 @@ function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
               <img
                 className={styles.webinarImage}
                 src={featuredWebinar?.image}
+                onError={(e)=>e.target.src = "/img/fallbackWebinars.jpg"}
                 alt="webinarImage"
               />
               <div className={styles.watchNowBtn}>

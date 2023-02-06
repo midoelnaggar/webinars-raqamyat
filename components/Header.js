@@ -3,7 +3,13 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import styles from "../styles/Header.module.scss";
 
-export default function Header({ searchModalOpen, setSearchModalOpen, webinars }) {
+export default function Header({
+  searchModalOpen,
+  setSearchModalOpen,
+  upcomingWebinars,
+  pastWebinars,
+  liveWebinars,
+}) {
   const [search, setSearch] = useState("");
   const { asPath, push } = useRouter();
   const escapeSearch = useCallback((e) => {
@@ -21,11 +27,10 @@ export default function Header({ searchModalOpen, setSearchModalOpen, webinars }
 
   useEffect(() => {
     if (searchModalOpen) {
-    document.body.style.overflowY = "hidden"
-  }
-  else {
-    document.body.style.overflowY = "unset"
-  }
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "unset";
+    }
   }, [searchModalOpen]);
 
   const handleSearch = () => {};
@@ -80,7 +85,7 @@ export default function Header({ searchModalOpen, setSearchModalOpen, webinars }
         style={
           !searchModalOpen
             ? {
-              overflow:"hidden",
+                overflow: "hidden",
                 width: "0",
                 height: "0",
                 padding: "0",
@@ -93,12 +98,11 @@ export default function Header({ searchModalOpen, setSearchModalOpen, webinars }
         }
         className={styles.searchModal}
       >
-       
         <div className={styles.search}>
-        <div
-          className={styles.clickable}
-          onClick={() => setSearchModalOpen(false)}
-        />
+          <div
+            className={styles.clickable}
+            onClick={() => setSearchModalOpen(false)}
+          />
           <div className={styles.inputAndButton}>
             <input
               value={search}
@@ -142,8 +146,9 @@ export default function Header({ searchModalOpen, setSearchModalOpen, webinars }
             </button>
           </div>
           <div className={styles.suggestedNames}>
-            {search === "" &&
-              webinars?.map((webinar) => {
+          {search === "" &&
+              Array.isArray(liveWebinars) &&
+              liveWebinars?.map((webinar) => {
                 return (
                   <div
                     onClick={() => setSearch(webinar?.name)}
@@ -162,7 +167,55 @@ export default function Header({ searchModalOpen, setSearchModalOpen, webinars }
                     <img src="/img/up-right-arrow.svg" alt="arrow" />
                   </div>
                 );
-              })}
+              })
+              }
+            {search === "" &&
+              Array.isArray(upcomingWebinars) &&
+              upcomingWebinars?.map((webinar) => {
+                return (
+                  <div
+                    onClick={() => setSearch(webinar?.name)}
+                    className={styles.suggestedName}
+                    style={
+                      !searchModalOpen
+                        ? {
+                            scale: "0",
+                          }
+                        : {
+                            scale: "1",
+                          }
+                    }
+                  >
+                    {webinar?.name}
+                    <img src="/img/up-right-arrow.svg" alt="arrow" />
+                  </div>
+                );
+              })
+              }
+              
+              {search === "" &&
+              Array.isArray(pastWebinars) &&
+              pastWebinars?.map((webinar) => {
+                return (
+                  <div
+                    onClick={() => setSearch(webinar?.name)}
+                    className={styles.suggestedName}
+                    style={
+                      !searchModalOpen
+                        ? {
+                            scale: "0",
+                          }
+                        : {
+                            scale: "1",
+                          }
+                    }
+                  >
+                    {webinar?.name}
+                    <img src="/img/up-right-arrow.svg" alt="arrow" />
+                  </div>
+                );
+              })
+              }
           </div>
           <div className={styles.noResults}>
             <img src="/img/noResults.svg" alt="noResults" />

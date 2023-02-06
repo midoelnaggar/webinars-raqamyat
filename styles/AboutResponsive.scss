@@ -1,0 +1,48 @@
+
+ .outlet{
+        @media (max-width:768px) {
+                padding-bottom: 50px !important;
+        }
+ }
+    .about {
+         @media (max-width:768px) {
+            margin-inline:0;
+            padding:  0px 38px;
+            .subDesc {
+                flex-direction: column;
+                .start {
+                    width: 100%;
+                }
+                .end  {
+                    .top {
+                        img {
+                            width: 100%;
+                        }
+                    }
+                    .bottom {
+                            display: block;
+                        max-width: 100%;
+                            font-size: 17px;
+                             margin: 15px 0px;
+                             div {
+                                max-width: 100%;
+                             }
+                    }
+                }
+            }
+            .desc {
+                font-size: 28px;
+            }
+
+
+          }
+          @media (max-width:600px) {
+                .desc {
+                        font-size: 18px;
+                        line-height: 24px;
+                        letter-spacing: 0;
+                    }
+          }
+          
+}
+ 

@@ -9,8 +9,9 @@ import { TextField } from "@mui/material";
 import { MuiTelInput } from "mui-tel-input";
 import Link from "next/link";
 import PastWebinars from "../../components/PastWebinars";
+import axios from "axios";
 
-function Webinar({ webinars, pastWebinars }) {
+function Webinar({ pastWebinars }) {
   const [webinar, setWebinar] = useState({});
   const [loading, setLoading] = useState(true);
   const [registeredModalOpen, setRegisteredModalOpen] = useState(false);
@@ -20,14 +21,16 @@ function Webinar({ webinars, pastWebinars }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (webinars?.length > 0) {
-      setWebinar(
-        webinars?.filter((w) => {
-          return w?.id == router.query.id;
-        })[0]
-      );
+    const getWebinar = async () => {
+      const res = await axios.get(`https://newraq.raqamyat.com/public/api/showWebinars?slug=${router.query.slug}`)
+      if(res.status === 200) {
+        setWebinar(await res?.data?.data)
+      }
     }
-  }, [router.query.id, webinars]);
+    if (router.query.slug !== undefined) {
+    getWebinar();
+  }
+  }, [router.query.slug]);
 
   useEffect(() => {
     if (webinar.id) {
@@ -93,6 +96,7 @@ function Webinar({ webinars, pastWebinars }) {
           </div>
           <div className={styles.thumbnail}>
             <img
+                            onError={(e)=>e.target.src = "/img/fallbackWebinars.jpg"}
               className={styles.webinarImage}
               src={webinar?.image}
               alt="webinarImage"
