@@ -417,7 +417,7 @@ export default function App({ Component, pageProps }) {
         style={{
           backgroundColor: router.asPath === "/apply" ? "#EAF3FF" : "white",
           scale:
-            width > 768 ? (width / 1920).toString() : (width / 768).toString(),
+            width > 820 ? (width / 1920).toString() : (width / 412).toString(),
         }}
         className="app"
       >
@@ -472,7 +472,7 @@ export default function App({ Component, pageProps }) {
               ? "block"
               : "none",
           scale:
-            width > 768 ? (width / 1920).toString() : (width / 768).toString(),
+            width > 820 ? (width / 1920).toString() : (width / 412).toString(),
           visibility: openCalendar ? "visible" : "hidden",
           bottom: openCalendar ? "100px" : "-477px",
           opacity: openCalendar ? 1 : 0,
@@ -508,7 +508,7 @@ export default function App({ Component, pageProps }) {
               ? "block"
               : "none",
           scale:
-            width > 768 ? (width / 1920).toString() : (width / 768).toString(),
+            width > 820 ? (width / 1920).toString() : (width / 412).toString(),
         }}
         className="calendarBtn"
         onClick={() => setOpenCalendar(!openCalendar)}
@@ -549,9 +549,9 @@ export default function App({ Component, pageProps }) {
                 }
               : {
                   scale:
-                    width > 768
+                    width > 820
                       ? (width / 1920).toString()
-                      : (width / 768).toString(),
+                      : (width / 412).toString(),
                 }
           }
           className="subscribeForm"
@@ -641,9 +641,9 @@ export default function App({ Component, pageProps }) {
             registered
               ? {
                   scale:
-                    width > 768
+                    width > 820
                       ? (width / 1920).toString()
-                      : (width / 768).toString(),
+                      : (width / 412).toString(),
                 }
               : {
                   scale: "0",
