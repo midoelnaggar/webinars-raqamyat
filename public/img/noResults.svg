@@ -1,8 +1,8 @@
 <svg id="Q3_icons" data-name="Q3 icons" xmlns="http://www.w3.org/2000/svg" width="64.008" height="60" viewBox="0 0 64.008 60">
   <g id="Group_163140" data-name="Group 163140">
-    <path id="Path_83665" data-name="Path 83665" d="M30.768,59.537a28.638,28.638,0,1,0-20.381-8.387A28.768,28.768,0,0,0,30.768,59.537Zm0-52.306A23.538,23.538,0,1,1,7.231,30.768,23.538,23.538,0,0,1,30.768,7.231Z" transform="translate(-2 -2)" fill="#fff"/>
-    <path id="Path_83666" data-name="Path 83666" d="M24.615,32.922a2.615,2.615,0,0,0,2.615-2.615V14.615a2.615,2.615,0,0,0-5.231,0V30.307A2.615,2.615,0,0,0,24.615,32.922Z" transform="translate(4.153 1.077)" fill="#fff"/>
-    <ellipse id="Ellipse_35" data-name="Ellipse 35" cx="2.919" cy="2.554" rx="2.919" ry="2.554" transform="translate(25.849 38.986)" fill="#fff"/>
+    <path id="Path_83665" data-name="Path 83665" d="M30.768,59.537a28.638,28.638,0,1,0-20.381-8.387A28.768,28.768,0,0,0,30.768,59.537Zm0-52.306A23.538,23.538,0,1,1,7.231,30.768,23.538,23.538,0,0,1,30.768,7.231Z" transform="translate(-2 -2)" fill="#000000"/>
+    <path id="Path_83666" data-name="Path 83666" d="M24.615,32.922a2.615,2.615,0,0,0,2.615-2.615V14.615a2.615,2.615,0,0,0-5.231,0V30.307A2.615,2.615,0,0,0,24.615,32.922Z" transform="translate(4.153 1.077)" fill="#000000"/>
+    <ellipse id="Ellipse_35" data-name="Ellipse 35" cx="2.919" cy="2.554" rx="2.919" ry="2.554" transform="translate(25.849 38.986)" fill="#000000"/>
   </g>
-  <path id="Path_83667" data-name="Path 83667" d="M2.615,20.922a2.615,2.615,0,0,0,2.615-2.615V2.615A2.615,2.615,0,0,0,0,2.615V18.307A2.615,2.615,0,0,0,2.615,20.922Z" transform="translate(44.619 46.551) rotate(-50)" fill="#fff"/>
+  <path id="Path_83667" data-name="Path 83667" d="M2.615,20.922a2.615,2.615,0,0,0,2.615-2.615V2.615A2.615,2.615,0,0,0,0,2.615V18.307A2.615,2.615,0,0,0,2.615,20.922Z" transform="translate(44.619 46.551) rotate(-50)" fill="#000000"/>
 </svg>

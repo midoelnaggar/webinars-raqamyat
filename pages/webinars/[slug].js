@@ -11,46 +11,43 @@ import Link from "next/link";
 import PastWebinars from "../../components/PastWebinars";
 import axios from "axios";
 
-function Webinar({ pastWebinars }) {
+function Webinar({
+  pastWebinars,
+  setRegisteredModalOpen,
+  registered,
+  registering,
+  setRegistering,
+  setRegistered
+}) {
   const [webinar, setWebinar] = useState({});
   const [loading, setLoading] = useState(true);
-  const [registeredModalOpen, setRegisteredModalOpen] = useState(false);
-  const [registering, setRegistering] = useState(false);
-  const [registered, setRegistered] = useState(false);
-
   const router = useRouter();
 
   useEffect(() => {
     const getWebinar = async () => {
-      const res = await axios.get(`https://newraq.raqamyat.com/public/api/showWebinars?slug=${router.query.slug}`)
-      if(res.status === 200) {
-        setWebinar(await res?.data?.data)
+      const res = await axios.get(
+        `https://newraq.raqamyat.com/public/api/showWebinars?slug=${router.query.slug}`
+      );
+      if (res.status === 200) {
+        setWebinar(await res?.data?.data);
       }
-    }
+    };
     if (router.query.slug !== undefined) {
-    getWebinar();
-  }
-  }, [router.query.slug]);
-
-  useEffect(() => {
-    if (webinar.id) {
-      setLoading(false);
+      getWebinar();
     }
-  }, [webinar]);
+  }, [router.query.slug]);
 
   useEffect(() => {
     if (registered) {
       setRegisteredModalOpen(true);
     }
   }, [registered]);
-  
+
   useEffect(() => {
-    if (registeredModalOpen) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "unset";
+    if (webinar.id) {
+      setLoading(false);
     }
-  }, [registeredModalOpen]);
+  }, [webinar]);
 
   const handleRegisterButton = () => {
     setRegistering(true);
@@ -60,6 +57,7 @@ function Webinar({ pastWebinars }) {
       setRegistered(true);
     }, 3000);
   };
+
   return (
     <>
       <div
@@ -96,7 +94,7 @@ function Webinar({ pastWebinars }) {
           </div>
           <div className={styles.thumbnail}>
             <img
-                            onError={(e)=>e.target.src = "/img/fallbackWebinars.jpg"}
+              onError={(e) => (e.target.src = "/img/fallbackWebinars.jpg")}
               className={styles.webinarImage}
               src={webinar?.image}
               alt="webinarImage"
@@ -169,57 +167,6 @@ function Webinar({ pastWebinars }) {
           </div>
         </div>
         <PastWebinars pastWebinars={pastWebinars} />
-      </div>
-      <div
-        className={styles.registeredModal}
-        style={
-          registeredModalOpen
-            ? {}
-            : {
-                overflow: "hidden",
-                width: "0",
-                height: "0",
-                padding: "0",
-                margin: "0",
-                opacity: "0",
-                backdropFilter: "blur(0px)",
-                WebkitBackdropFilter: "blur(0px)",
-              }
-        }
-      >
-        <div
-          className={styles.clickable}
-          onClick={() => setRegisteredModalOpen(false)}
-        />
-        <div
-          style={
-            registered
-              ? {
-                  scale: "1",
-                }
-              : {
-                  scale: "0",
-                }
-          }
-          className={styles.thankYou}
-        >
-          <div className={styles.imageContainer}>
-            <img src="/img/subscribed.svg" alt="subscribed" />
-          </div>
-          <div className={styles.message}>
-            <div className={styles.title}>THANK YOU FOR SUBSCRIBING</div>
-            <div className={styles.subtitle}>
-              By registering, you’ve opened the eCommerce Gate of Knowledge, and
-              you will be learning from the top experts in MENA.
-            </div>
-            <button
-              onClick={() => setRegisteredModalOpen(false)}
-              className={styles.continueuBtn}
-            >
-              Continue
-            </button>
-          </div>
-        </div>
       </div>
     </>
   );

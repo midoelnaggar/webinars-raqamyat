@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { TextField } from "@mui/material";
-import { MuiTelInput } from "mui-tel-input";
 import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 import DateRangeIcon from "@mui/icons-material/DateRange";
@@ -11,7 +9,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import PastWebinars from "../components/PastWebinars";
-import { ScaleLoader } from "react-spinners";
 import { useRouter } from "next/router";
 
 const feedbacks = [
@@ -57,18 +54,11 @@ export default function Home({
   upcomingWebinars,
   pastWebinars,
   featuredWebinar,
+  subscribeModalOpen,
+  setSubscribeModalOpen,
 }) {
-  const [subscribeModalOpen, setSubscribeModalOpen] = useState(false);
-  const [subscribing, setSubscribing] = useState(false);
-  const [subscribed, setSubscribed] = useState(false);
   const router = useRouter();
-  useEffect(() => {
-    if (subscribeModalOpen) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "unset";
-    }
-  }, [subscribeModalOpen]);
+
   const getLogos = () => {
     const logos = [];
     for (let i = 1; i <= 15; i++) {
@@ -83,16 +73,7 @@ export default function Home({
     return logos;
   };
 
-  const handleSubscribeButton = () => {
-    setSubscribing(true);
-    setTimeout(() => {
-      setSubscribing(false);
-      setSubscribed(true);
-    }, 3000);
-  };
-
   return (
-    <>
       <div className={styles.home}>
         <div className={styles.hero}>
           <img className={styles.shapes} src="/img/shapes.svg" alt="shapes" />
@@ -139,11 +120,9 @@ export default function Home({
             </div>
             <div className={styles.right}>
               <div className={styles.status}>
-                {featuredWebinar?.type === "upcoming"
-                  && "Upcoming Webinar"}
-                  {featuredWebinar?.type === "past" && "Last Webinar"}
-                  {featuredWebinar?.type === "live" && "Live Webinar"}
-
+                {featuredWebinar?.type === "upcoming" && "Upcoming Webinar"}
+                {featuredWebinar?.type === "past" && "Last Webinar"}
+                {featuredWebinar?.type === "live" && "Live Webinar"}
               </div>
               <div className={styles.dateAndTime}>
                 <DateRangeIcon
@@ -369,7 +348,7 @@ export default function Home({
           </div>
           <div className={styles.subtitle}>Subscribe To Raqamyat Webinar</div>
           <button
-            onClick={() => setSubscribeModalOpen(true)}
+            onClick={() => setSubscribeModalOpen(!subscribeModalOpen)}
             className={styles.subscribeBtn}
           >
             SUBSCRIBE
@@ -388,102 +367,5 @@ export default function Home({
           <div className={styles.clientLogos}>{getLogos()}</div>
         </div>
       </div>
-      <div
-        className={styles.subscribingModal}
-        style={
-          subscribeModalOpen
-            ? {}
-            : {
-                overflow: "hidden",
-                width: "0",
-                height: "0",
-                padding: "0",
-                margin: "0",
-                opacity: "0",
-                backdropFilter: "blur(0px)",
-                WebkitBackdropFilter: "blur(0px)",
-              }
-        }
-      >
-        <div
-          className={styles.clickable}
-          onClick={() => setSubscribeModalOpen(false)}
-        />
-
-        <div
-          style={
-            !subscribeModalOpen || subscribed
-              ? {
-                  scale: "0",
-                }
-              : {
-                  scale: "1",
-                }
-          }
-          className={styles.subscribeForm}
-        >
-          <div className={styles.title}>Subscribe To Raqamyat Webinar</div>
-          <div className={styles.inputContainer}>
-            <TextField fullWidth />
-            <label>Name</label>
-          </div>
-          <div className={styles.inputContainer}>
-            <TextField fullWidth className={styles.input} />
-            <label>Email</label>
-          </div>
-          <div className={styles.inputContainer}>
-            <MuiTelInput fullWidth defaultCountry="EG" />
-            <label>WhatsApp</label>
-          </div>
-          <div className={styles.message}>
-            By registering, you confirm that you have read and agree to the
-            <Link href="/"> Event Terms of Service</Link> and that you agree to
-            the processing of your personal data by Salesforce as described in
-            the <Link href="/">Privacy Statement</Link>.
-          </div>
-          <button
-            onClick={handleSubscribeButton}
-            className={styles.registerBtn}
-          >
-            Subscribe
-          </button>
-          <div
-            style={{ display: subscribing ? "flex" : "none" }}
-            className={styles.subscribingOverlay}
-          >
-            <ScaleLoader color="#00a4f8" />
-          </div>
-        </div>
-        <div
-          style={
-            subscribed
-              ? {
-                  scale: "1",
-                }
-              : {
-                  scale: "0",
-                }
-          }
-          className={styles.thankYou}
-        >
-          <div className={styles.imageContainer}>
-            <img src="/img/subscribed.svg" alt="subscribed" />
-          </div>
-          <div className={styles.message}>
-            <div className={styles.title}>THANK YOU FOR SUBSCRIBING</div>
-            <div className={styles.subtitle}>
-              By registering, you’ve opened the eCommerce Gate of Knowledge, and
-              you will be learning from the top experts in MENA.
-            </div>
-            <button
-              onClick={() => setSubscribeModalOpen(false)}
-              className={styles.continueuBtn}
-            >
-              Continue
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
   );
 }

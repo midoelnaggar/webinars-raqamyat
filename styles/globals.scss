@@ -254,12 +254,12 @@ button[name="hasWebinar"] {
     right: 5px;
     width: 6px;
     height: 6px;
-    border-radius: 99999px;
+    border-radius: 100%;
   }
   abbr {
     pointer-events: none;
   }
-  .tooltipContainer {
+  .tooltipContainer, .tooltipContainer2 {
     width: 313px;
     padding: 30px;
     background-color: white;
@@ -324,7 +324,7 @@ button[name="hasWebinar"] {
   }
 }
 .react-calendar__month-view__days__day--weekend {
-  .tooltipContainer {
+  .tooltipContainer,.tooltipContainer2 {
     left: -120px !important;
 
     .tooltip::after {
@@ -333,6 +333,222 @@ button[name="hasWebinar"] {
   }
 }
 
+.subscribingModal {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  -webkit-backdrop-filter: blur(50px);
+  backdrop-filter: blur(50px);
+  z-index: 3;
+  .clickable {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+  .subscribeForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    box-shadow: 0px 3px 48px #e1edffc7;
+    border-radius: 18px;
+    padding: 60px 40px;
+    background-image: url("/img/shapes8.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    transition: all 0.5s;
+
+    .title {
+      margin-bottom: 35px;
+      font-size: 22px;
+      line-height: 25px;
+      color: #2a2a2a;
+      font-weight: 600;
+    }
+    .inputContainer {
+      color: var(--cg70) !important;
+      margin-block-end: 33px;
+      position: relative;
+      label {
+        padding: 4px 12px;
+        position: absolute;
+        left: 20px;
+        top: -15px;
+        font-size: 17px;
+        letter-spacing: -0.65px;
+        background-color: white;
+        border: 1px solid #e1edff;
+        border-radius: 15px;
+      }
+    }
+    .message {
+      color: var(--cg70);
+      margin-block-end: 20px;
+      max-width: 450px;
+      a {
+        color: var(--c2);
+      }
+    }
+    .registerBtn {
+      cursor: pointer;
+      font-size: 17px;
+      text-align: center;
+      color: white;
+      background: #0093de 0% 0% no-repeat padding-box;
+      box-shadow: 0px 8px 48px #00a4f861;
+      border: none;
+      border-radius: 40px;
+      padding: 20px 70px;
+    }
+    .subscribingOverlay {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba($color: #ffffff, $alpha: 0.5);
+      border-radius: 18px;
+    }
+  }
+  .thankYou {
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    box-shadow: 0px 3px 48px #e1edffc7;
+    border-radius: 18px;
+    padding: 40px;
+    background-image: url("/img/shapes9.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    transition: all 0.5s;
+
+    .imageContainer {
+      margin-inline-end: 40px;
+      margin: -65px 40px -70px -68px;
+    }
+
+    .message {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 550px;
+      .title {
+        color: #2a2a2a;
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 25px;
+        margin-bottom: 20px;
+      }
+      .subtitle {
+        max-width: 450px;
+        color: #a1a1a1;
+        font-size: 17px;
+        line-height: 23px;
+        letter-spacing: -0.56px;
+      }
+      .continueuBtn {
+        cursor: pointer;
+        margin-top: 20px;
+        width: fit-content;
+        font-size: 17px;
+        text-align: center;
+        color: white;
+        background: #0093de 0% 0% no-repeat padding-box;
+        border: none;
+        border-radius: 40px;
+        padding: 20px 50px;
+      }
+    }
+  }
+}
+.registeredModal {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  -webkit-backdrop-filter: blur(50px);
+  backdrop-filter: blur(50px);
+  z-index: 3;
+  .clickable {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+  .thankYou {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    box-shadow: 0px 3px 48px #e1edffc7;
+    border-radius: 18px;
+    padding: 40px;
+    background-image: url("/img/shapes9.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    transition: all 0.5s;
+
+    .imageContainer {
+      margin-inline-end: 40px;
+      margin: -65px 40px -70px -68px;
+    }
+
+    .message {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 550px;
+      .title {
+        color: #2a2a2a;
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 25px;
+        margin-bottom: 20px;
+      }
+      .subtitle {
+        max-width: 450px;
+        color: #a1a1a1;
+        font-size: 17px;
+        line-height: 23px;
+        letter-spacing: -0.56px;
+      }
+      .continueuBtn {
+        cursor: pointer;
+        margin-top: 20px;
+        width: fit-content;
+        font-size: 17px;
+        text-align: center;
+        color: white;
+        background: #0093de 0% 0% no-repeat padding-box;
+        border: none;
+        border-radius: 40px;
+        padding: 20px 50px;
+      }
+    }
+  }
+}
 .swiper-button-prev {
   height: 38px !important;
   width: 38px !important;

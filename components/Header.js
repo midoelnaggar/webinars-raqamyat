@@ -1,6 +1,7 @@
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import styles from "../styles/Header.module.scss";
 
 export default function Header({
@@ -10,13 +11,21 @@ export default function Header({
   pastWebinars,
   liveWebinars,
 }) {
-  const [search, setSearch] = useState("");
+  const [searching, setSearching] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
   const { asPath, push } = useRouter();
+
+  const searchInputRef = useRef();
+
   const escapeSearch = useCallback((e) => {
     if (e.key === "Escape") {
       setSearchModalOpen(false);
     }
   }, []);
+
+  useEffect(() => {
+    setSearchResults([...liveWebinars, ...upcomingWebinars, ...pastWebinars]);
+  }, [upcomingWebinars, pastWebinars, liveWebinars]);
 
   useEffect(() => {
     document.addEventListener("keydown", escapeSearch);
@@ -26,14 +35,33 @@ export default function Header({
   }, [escapeSearch]);
 
   useEffect(() => {
-    if (searchModalOpen) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "unset";
+    if (!searchModalOpen) {
+      searchInputRef.current.value = "";
     }
   }, [searchModalOpen]);
 
-  const handleSearch = () => {};
+  const controller = new AbortController();
+
+  const handleSearch = () => {
+    const searchByName = async () => {
+      const res = await axios.get(
+        "https://newraq.raqamyat.com/public/api/webinars",
+        {
+          params: {
+            name: searchInputRef?.current?.value,
+          },
+          signal: controller.signal,
+        }
+      );
+      if (res.status === 200) {
+        setSearchResults(res?.data?.data?.data);
+      }
+    };
+    searchByName();
+    return () => {
+      controller.abort();
+    };
+  };
 
   return (
     <>
@@ -72,7 +100,6 @@ export default function Header({
           <button
             onClick={() => {
               setSearchModalOpen(true);
-              setSearch("");
             }}
             className={styles.searchBtn}
           >
@@ -105,8 +132,8 @@ export default function Header({
           />
           <div className={styles.inputAndButton}>
             <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              ref={searchInputRef}
+              onChange={handleSearch}
               style={
                 !searchModalOpen
                   ? {
@@ -146,12 +173,14 @@ export default function Header({
             </button>
           </div>
           <div className={styles.suggestedNames}>
-          {search === "" &&
-              Array.isArray(liveWebinars) &&
-              liveWebinars?.map((webinar) => {
+            {Array.isArray(searchResults) &&
+              searchResults?.map((webinar) => {
                 return (
                   <div
-                    onClick={() => setSearch(webinar?.name)}
+                    onClick={() => {
+                      push(`/webinars/${webinar?.slug}`);
+                      setSearchModalOpen(false);
+                    }}
                     className={styles.suggestedName}
                     style={
                       !searchModalOpen
@@ -167,57 +196,15 @@ export default function Header({
                     <img src="/img/up-right-arrow.svg" alt="arrow" />
                   </div>
                 );
-              })
-              }
-            {search === "" &&
-              Array.isArray(upcomingWebinars) &&
-              upcomingWebinars?.map((webinar) => {
-                return (
-                  <div
-                    onClick={() => setSearch(webinar?.name)}
-                    className={styles.suggestedName}
-                    style={
-                      !searchModalOpen
-                        ? {
-                            scale: "0",
-                          }
-                        : {
-                            scale: "1",
-                          }
-                    }
-                  >
-                    {webinar?.name}
-                    <img src="/img/up-right-arrow.svg" alt="arrow" />
-                  </div>
-                );
-              })
-              }
-              
-              {search === "" &&
-              Array.isArray(pastWebinars) &&
-              pastWebinars?.map((webinar) => {
-                return (
-                  <div
-                    onClick={() => setSearch(webinar?.name)}
-                    className={styles.suggestedName}
-                    style={
-                      !searchModalOpen
-                        ? {
-                            scale: "0",
-                          }
-                        : {
-                            scale: "1",
-                          }
-                    }
-                  >
-                    {webinar?.name}
-                    <img src="/img/up-right-arrow.svg" alt="arrow" />
-                  </div>
-                );
-              })
-              }
+              })}
           </div>
-          <div className={styles.noResults}>
+          <div
+            style={{
+              display:
+                !searching & (searchResults?.length !== 0) ? "none" : "flex",
+            }}
+            className={styles.noResults}
+          >
             <img src="/img/noResults.svg" alt="noResults" />
             No Results Found
           </div>

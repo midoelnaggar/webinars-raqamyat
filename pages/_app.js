@@ -2,6 +2,8 @@ import { createRoot } from "react-dom/client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Calendar } from "react-calendar";
+import { TextField } from "@mui/material";
+import { MuiTelInput } from "mui-tel-input";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import Head from "next/head";
 import Footer from "../components/Footer";
@@ -12,6 +14,7 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import { SnackbarProvider } from "notistack";
 import useWindowSize from "../hooks/useWindowSize";
+import { ScaleLoader } from "react-spinners";
 
 export default function App({ Component, pageProps }) {
   const [upcomingWebinars, setUpcomingWebinars] = useState([]);
@@ -20,9 +23,13 @@ export default function App({ Component, pageProps }) {
   const [featuredWebinar, setFeaturedWebinar] = useState({});
   const [openCalendar, setOpenCalendar] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
-
+  const [subscribeModalOpen, setSubscribeModalOpen] = useState(false);
+  const [subscribing, setSubscribing] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  const [registeredModalOpen, setRegisteredModalOpen] = useState(false);
+  const [registering, setRegistering] = useState(false);
+  const [registered, setRegistered] = useState(false);
   const router = useRouter();
-
   const width = useWindowSize();
 
   useEffect(() => {
@@ -96,55 +103,46 @@ export default function App({ Component, pageProps }) {
     };
     getUpcomingWebinars();
     getPastWebinars();
+    setUpcomingWebinars(
+      upcomingWebinars?.filter((webinar) => {
+        return !moment().isBetween(
+          moment(webinar?.date, "DD-MM-YYYY hh:mm:ss"),
+          moment(webinar?.date, "DD-MM-YYYY hh:mm:ss").add(1, "h")
+        );
+      })
+    );
+    setPastWebinars(
+      pastWebinars?.filter((webinar) => {
+        return !moment().isBetween(
+          moment(webinar?.date, "DD-MM-YYYY hh:mm:ss"),
+          moment(webinar?.date, "DD-MM-YYYY hh:mm:ss").add(1, "h")
+        );
+      })
+    );
   }, []);
 
   useEffect(() => {
     const live = upcomingWebinars?.filter((webinar) => {
       return moment().isBetween(
         moment(webinar?.date, "DD-MM-YYYY hh:mm:ss"),
-        moment(webinar?.date, "DD-MM-YYYY hh:mm:ss").add(1, "h"),
-        "h"
+        moment(webinar?.date, "DD-MM-YYYY hh:mm:ss").add(1, "h")
       );
     });
     if (live?.length > 0) {
       setLiveWebinars(live);
     }
-    setUpcomingWebinars(
-      upcomingWebinars?.filter((webinar) => {
-        return !moment().isBetween(
-          moment(webinar?.date, "DD-MM-YYYY hh:mm:ss"),
-          moment(webinar?.date, "DD-MM-YYYY hh:mm:ss").add(1, "h"),
-          "h"
-        );
-      })
-    );
   }, [upcomingWebinars]);
-
-  useEffect(() => {
-    
-  }, [liveWebinars]);
 
   useEffect(() => {
     const live = pastWebinars?.filter((webinar) => {
       return moment().isBetween(
         moment(webinar?.date, "DD-MM-YYYY hh:mm:ss"),
-        moment(webinar?.date, "DD-MM-YYYY hh:mm:ss").add(1, "h"),
-        "h"
+        moment(webinar?.date, "DD-MM-YYYY hh:mm:ss").add(1, "h")
       );
     });
-
     if (live?.length > 0) {
       setLiveWebinars(live);
     }
-    setPastWebinars(
-      pastWebinars?.filter((webinar) => {
-        return !moment().isBetween(
-          moment(webinar?.date, "DD-MM-YYYY hh:mm:ss"),
-          moment(webinar?.date, "DD-MM-YYYY hh:mm:ss").add(1, "h"),
-          "h"
-        );
-      })
-    );
   }, [pastWebinars]);
 
   useEffect(() => {
@@ -160,6 +158,14 @@ export default function App({ Component, pageProps }) {
     }
     markDays();
   }, [upcomingWebinars, pastWebinars, liveWebinars]);
+
+  useEffect(() => {
+    if (registeredModalOpen) {
+      document.getElementsByClassName("app")[0].style.overflowY = "hidden";
+    } else {
+      document.getElementsByClassName("app")[0].style.overflowY = "unset";
+    }
+  }, [registeredModalOpen]);
 
   useEffect(() => {
     if (width > 820) {
@@ -191,7 +197,20 @@ export default function App({ Component, pageProps }) {
           days[c].appendChild(a);
           days[c].addEventListener("click", (e) => {
             if (tooltipContainer.style.visibility === "hidden") {
-              tooltipContainer.style.visibility = "visible";
+              const hide = (item) => {
+                new Promise((resolve) => {
+                  resolve((item.style.visibility = "hidden"));
+                });
+              };
+              const hideAllAndShowCurrent = async () => {
+                const allToolTipContainers =
+                  await document.getElementsByClassName("tooltipContainer");
+                for (let item of allToolTipContainers) {
+                  await hide(item);
+                }
+                tooltipContainer.style.visibility = await "visible";
+              };
+              hideAllAndShowCurrent();
             } else {
               tooltipContainer.style.visibility = "hidden";
             }
@@ -253,7 +272,20 @@ export default function App({ Component, pageProps }) {
           days[c].appendChild(a);
           days[c].addEventListener("click", (e) => {
             if (tooltipContainer.style.visibility === "hidden") {
-              tooltipContainer.style.visibility = "visible";
+              const hide = (item) => {
+                new Promise((resolve) => {
+                  resolve((item.style.visibility = "hidden"));
+                });
+              };
+              const hideAllAndShowCurrent = async () => {
+                const allToolTipContainers =
+                  await document.getElementsByClassName("tooltipContainer");
+                for (let item of allToolTipContainers) {
+                  await hide(item);
+                }
+                tooltipContainer.style.visibility = await "visible";
+              };
+              hideAllAndShowCurrent();
             } else {
               tooltipContainer.style.visibility = "hidden";
             }
@@ -306,23 +338,36 @@ export default function App({ Component, pageProps }) {
           a.className = "tag";
           a.style.backgroundColor = "#FF3939";
 
-          const tooltipContainer = document.createElement("div");
-          tooltipContainer.style.visibility = "hidden";
-          tooltipContainer.className = "tooltipContainer";
+          const tooltipContainer2 = document.createElement("div");
+          tooltipContainer2.style.visibility = "hidden";
+          tooltipContainer2.className = "tooltipContainer2";
           days[c].name = "hasWebinar";
           days[c].autofocus = false;
           days[c].appendChild(a);
           days[c].addEventListener("click", (e) => {
-            if (tooltipContainer.style.visibility === "hidden") {
-              tooltipContainer.style.visibility = "visible";
+            if (tooltipContainer2.style.visibility === "hidden") {
+              const hide = (item) => {
+                new Promise((resolve) => {
+                  resolve((item.style.visibility = "hidden"));
+                });
+              };
+              const hideAllAndShowCurrent = async () => {
+                const allToolTipContainers =
+                  await document.getElementsByClassName("tooltipContainer");
+                for (let item of allToolTipContainers) {
+                  await hide(item);
+                }
+                tooltipContainer2.style.visibility = await "visible";
+              };
+              hideAllAndShowCurrent();
             } else {
-              tooltipContainer.style.visibility = "hidden";
+              tooltipContainer2.style.visibility = "hidden";
             }
           });
-          if (!days[c].querySelector(".tooltipContainer")) {
-            days[c].appendChild(tooltipContainer);
+          if (!days[c].querySelector(".tooltipContainer2")) {
+            days[c].appendChild(tooltipContainer2);
           }
-          const root = createRoot(tooltipContainer);
+          const root = createRoot(tooltipContainer2);
           root.render(
             <Link
               className="tooltip"
@@ -356,6 +401,14 @@ export default function App({ Component, pageProps }) {
         }
       }
     }
+  };
+
+  const handleSubscribeButton = () => {
+    setSubscribing(true);
+    setTimeout(() => {
+      setSubscribing(false);
+      setSubscribed(true);
+    }, 3000);
   };
 
   return (
@@ -399,6 +452,13 @@ export default function App({ Component, pageProps }) {
               pastWebinars={pastWebinars}
               upcomingWebinars={upcomingWebinars}
               liveWebinars={liveWebinars}
+              subscribeModalOpen={subscribeModalOpen}
+              setSubscribeModalOpen={setSubscribeModalOpen}
+              registeredModalOpen={registeredModalOpen}
+              setRegisteredModalOpen={setRegisteredModalOpen}
+              registering={registering}
+              setRegistered={setRegistered}
+              setRegistering={setRegistering}
               {...pageProps}
             />
           </div>
@@ -408,7 +468,9 @@ export default function App({ Component, pageProps }) {
       <div
         style={{
           display:
-            (router.asPath === "/") & !searchModalOpen ? "block" : "none",
+            (router.asPath === "/") & !searchModalOpen & !subscribeModalOpen
+              ? "block"
+              : "none",
           scale:
             width > 768 ? (width / 1920).toString() : (width / 768).toString(),
           visibility: openCalendar ? "visible" : "hidden",
@@ -442,7 +504,9 @@ export default function App({ Component, pageProps }) {
       <div
         style={{
           display:
-            (router.asPath === "/") & !searchModalOpen ? "block" : "none",
+            (router.asPath === "/") & !searchModalOpen & !subscribeModalOpen
+              ? "block"
+              : "none",
           scale:
             width > 768 ? (width / 1920).toString() : (width / 768).toString(),
         }}
@@ -454,6 +518,156 @@ export default function App({ Component, pageProps }) {
         </div>
 
         <div className="right">Webinars Calendar</div>
+      </div>
+      <div
+        className="subscribingModal"
+        style={
+          subscribeModalOpen
+            ? {}
+            : {
+                overflow: "hidden",
+                width: "0",
+                height: "0",
+                padding: "0",
+                margin: "0",
+                opacity: "0",
+                backdropFilter: "blur(0px)",
+                WebkitBackdropFilter: "blur(0px)",
+              }
+        }
+      >
+        <div
+          className="clickable"
+          onClick={() => setSubscribeModalOpen(false)}
+        />
+
+        <div
+          style={
+            !subscribeModalOpen || subscribed
+              ? {
+                  scale: "0",
+                }
+              : {
+                  scale:
+                    width > 768
+                      ? (width / 1920).toString()
+                      : (width / 768).toString(),
+                }
+          }
+          className="subscribeForm"
+        >
+          <div className="title">Subscribe To Raqamyat Webinar</div>
+          <div className="inputContainer">
+            <TextField fullWidth />
+            <label>Name</label>
+          </div>
+          <div className="inputContainer">
+            <TextField fullWidth className="input" />
+            <label>Email</label>
+          </div>
+          <div className="inputContainer">
+            <MuiTelInput fullWidth defaultCountry="EG" />
+            <label>WhatsApp</label>
+          </div>
+          <div className="message">
+            By registering, you confirm that you have read and agree to the
+            <Link href="/"> Event Terms of Service</Link> and that you agree to
+            the processing of your personal data by Salesforce as described in
+            the <Link href="/">Privacy Statement</Link>.
+          </div>
+          <button onClick={handleSubscribeButton} className="registerBtn">
+            Subscribe
+          </button>
+          <div
+            style={{ display: subscribing ? "flex" : "none" }}
+            className="subscribingOverlay"
+          >
+            <ScaleLoader color="#00a4f8" />
+          </div>
+        </div>
+        <div
+          style={
+            subscribed
+              ? {
+                  scale: "1",
+                }
+              : {
+                  scale: "0",
+                }
+          }
+          className="thankYou"
+        >
+          <div className="imageContainer">
+            <img src="/img/subscribed.svg" alt="subscribed" />
+          </div>
+          <div className="message">
+            <div className="title">THANK YOU FOR SUBSCRIBING</div>
+            <div className="subtitle">
+              By registering, you’ve opened the eCommerce Gate of Knowledge, and
+              you will be learning from the top experts in MENA.
+            </div>
+            <button
+              onClick={() => setSubscribeModalOpen(false)}
+              className="continueuBtn"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        className="registeredModal"
+        style={
+          registeredModalOpen
+            ? {}
+            : {
+                overflow: "hidden",
+                width: "0",
+                height: "0",
+                padding: "0",
+                margin: "0",
+                opacity: "0",
+                backdropFilter: "blur(0px)",
+                WebkitBackdropFilter: "blur(0px)",
+              }
+        }
+      >
+        <div
+          className="clickable"
+          onClick={() => setRegisteredModalOpen(false)}
+        />
+        <div
+          style={
+            registered
+              ? {
+                  scale:
+                    width > 768
+                      ? (width / 1920).toString()
+                      : (width / 768).toString(),
+                }
+              : {
+                  scale: "0",
+                }
+          }
+          className="thankYou"
+        >
+          <div className="imageContainer">
+            <img src="/img/subscribed.svg" alt="subscribed" />
+          </div>
+          <div className="message">
+            <div className="title">THANK YOU FOR SUBSCRIBING</div>
+            <div className="subtitle">
+              By registering, you’ve opened the eCommerce Gate of Knowledge, and
+              you will be learning from the top experts in MENA.
+            </div>
+            <button
+              onClick={() => setRegisteredModalOpen(false)}
+              className="continueuBtn"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );

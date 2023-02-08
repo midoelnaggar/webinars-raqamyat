@@ -102,7 +102,7 @@ function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
               </div>
               <div className={styles.register}>
                 <button onClick={()=>{
-                        router.push(`/webinars/${featuredWebinar?.id}`)
+                        router.push(`/webinars/${featuredWebinar?.slug}`)
                       }} className={styles.btn}>{moment(moment(featuredWebinar?.date, "DD-MM-YYYY")).isAfter(
                         moment()
                       )
@@ -158,7 +158,7 @@ function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
                     </div>
                     <div className={styles.register}>
                       <button onClick={()=>{
-                        router.push(`/webinars/${webinar?.id}`)
+                        router.push(`/webinars/${webinar?.slug}`)
                       }} className={styles.btn}>Register Now</button>
                     </div>
                   </div>
@@ -211,7 +211,7 @@ function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
                     </div>
                     <div className={styles.register}>
                       <button onClick={()=>{
-                        router.push(`/webinars/${webinar?.id}`)
+                        router.push(`/webinars/${webinar?.slug}`)
                       }} className={styles.btn}>Get Recordings</button>
                     </div>
                   </div>
