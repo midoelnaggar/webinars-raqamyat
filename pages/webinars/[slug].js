@@ -17,10 +17,11 @@ function Webinar({
   registered,
   registering,
   setRegistering,
-  setRegistered
+  setRegistered,
 }) {
   const [webinar, setWebinar] = useState({});
   const [loading, setLoading] = useState(true);
+  const [form, setForm] = useState({});
   const router = useRouter();
 
   useEffect(() => {
@@ -46,16 +47,25 @@ function Webinar({
   useEffect(() => {
     if (webinar.id) {
       setLoading(false);
+      setForm({ ...form, webinar_id: webinar.id });
     }
   }, [webinar]);
 
   const handleRegisterButton = () => {
     setRegistering(true);
-    setTimeout(() => {
-      setRegistering(false);
-      setRegisteredModalOpen(true);
-      setRegistered(true);
-    }, 3000);
+    const submit = async () => {
+      const res = await axios.post("https://newraq.raqamyat.com/public/api/webinarStore",form);
+      if (res.status === 200) {
+        setRegisteredModalOpen(true);
+        setRegistering(false);
+        setRegistered(true);
+      }
+      else {
+        console.log("somthing went wrong!");
+        setRegistering(false);
+      }
+    };
+    submit();
   };
 
   return (
@@ -134,15 +144,26 @@ function Webinar({
             <div className={styles.right}>
               <div className={styles.title}>Access the webinar now</div>
               <div className={styles.inputContainer}>
-                <TextField fullWidth />
+                <TextField
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  fullWidth
+                />
                 <label>Name</label>
               </div>
               <div className={styles.inputContainer}>
-                <TextField fullWidth className={styles.input} />
+                <TextField
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  fullWidth
+                />
                 <label>Email</label>
               </div>
               <div className={styles.inputContainer}>
-                <MuiTelInput fullWidth defaultCountry="EG" />
+                <MuiTelInput
+                  value={form?.whatsapp}
+                  onChange={(e) => setForm({ ...form, whatsapp: e })}
+                  fullWidth
+                  defaultCountry="EG"
+                />
                 <label>WhatsApp</label>
               </div>
               <div className={styles.message}>

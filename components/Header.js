@@ -37,6 +37,7 @@ export default function Header({
   useEffect(() => {
     if (!searchModalOpen) {
       searchInputRef.current.value = "";
+      setSearchResults([...liveWebinars, ...upcomingWebinars, ...pastWebinars]);
     }
   }, [searchModalOpen]);
 

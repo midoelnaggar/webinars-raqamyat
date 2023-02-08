@@ -603,6 +603,9 @@ fieldset {
 .MuiAutocomplete-input {
   padding: 13px 32px !important;
 }
+.MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon.css-qm9mjt-MuiAutocomplete-root .MuiOutlinedInput-root {
+  padding-right: 10px !important;
+}
 
 .MuiChip-deletable {
   span{

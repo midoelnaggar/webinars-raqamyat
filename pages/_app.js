@@ -26,6 +26,7 @@ export default function App({ Component, pageProps }) {
   const [subscribeModalOpen, setSubscribeModalOpen] = useState(false);
   const [subscribing, setSubscribing] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
+  const [registerForm, setRegisterForm] = useState({});
   const [registeredModalOpen, setRegisteredModalOpen] = useState(false);
   const [registering, setRegistering] = useState(false);
   const [registered, setRegistered] = useState(false);
@@ -412,7 +413,7 @@ export default function App({ Component, pageProps }) {
   };
 
   return (
-    <>
+    <SnackbarProvider>
       <div
         style={{
           backgroundColor: router.asPath === "/apply" ? "#EAF3FF" : "white",
@@ -421,49 +422,44 @@ export default function App({ Component, pageProps }) {
         }}
         className="app"
       >
-        <SnackbarProvider>
-          <Head>
-            <title>Raqamyat Webinars</title>
-            <meta
-              name="description"
-              content="If you’re looking for knowledge, then you've arrived at the right place. Here you will find all of our recorded webinars with eCommerce specialists from around the globe to watch whenever you wish."
-            />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1"
-            />
-            <link rel="icon" href="/favicon.ico" />
-            <link
-              rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-            ></link>
-          </Head>
-          <Header
-            searchModalOpen={searchModalOpen}
-            setSearchModalOpen={setSearchModalOpen}
+        <Head>
+          <title>Raqamyat Webinars</title>
+          <meta
+            name="description"
+            content="If you’re looking for knowledge, then you've arrived at the right place. Here you will find all of our recorded webinars with eCommerce specialists from around the globe to watch whenever you wish."
+          />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="icon" href="/favicon.ico" />
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          ></link>
+        </Head>
+        <Header
+          searchModalOpen={searchModalOpen}
+          setSearchModalOpen={setSearchModalOpen}
+          featuredWebinar={featuredWebinar}
+          pastWebinars={pastWebinars}
+          upcomingWebinars={upcomingWebinars}
+          liveWebinars={liveWebinars}
+        />
+        <div className="outlet">
+          <Component
             featuredWebinar={featuredWebinar}
             pastWebinars={pastWebinars}
             upcomingWebinars={upcomingWebinars}
             liveWebinars={liveWebinars}
+            subscribeModalOpen={subscribeModalOpen}
+            setSubscribeModalOpen={setSubscribeModalOpen}
+            registeredModalOpen={registeredModalOpen}
+            setRegisteredModalOpen={setRegisteredModalOpen}
+            registering={registering}
+            setRegistered={setRegistered}
+            setRegistering={setRegistering}
+            {...pageProps}
           />
-          <div className="outlet">
-            <Component
-              featuredWebinar={featuredWebinar}
-              pastWebinars={pastWebinars}
-              upcomingWebinars={upcomingWebinars}
-              liveWebinars={liveWebinars}
-              subscribeModalOpen={subscribeModalOpen}
-              setSubscribeModalOpen={setSubscribeModalOpen}
-              registeredModalOpen={registeredModalOpen}
-              setRegisteredModalOpen={setRegisteredModalOpen}
-              registering={registering}
-              setRegistered={setRegistered}
-              setRegistering={setRegistering}
-              {...pageProps}
-            />
-          </div>
-          <Footer />
-        </SnackbarProvider>
+        </div>
+        <Footer />
       </div>
       <div
         style={{
@@ -558,15 +554,26 @@ export default function App({ Component, pageProps }) {
         >
           <div className="title">Subscribe To Raqamyat Webinar</div>
           <div className="inputContainer">
-            <TextField fullWidth />
+            <TextField
+              onChange={(e) => setForm({ ...registerForm, name: e.target.value })}
+              fullWidth
+            />
             <label>Name</label>
           </div>
           <div className="inputContainer">
-            <TextField fullWidth className="input" />
+            <TextField
+              onChange={(e) => setForm({ ...registerForm, email: e.target.value })}
+              fullWidth
+            />
             <label>Email</label>
           </div>
           <div className="inputContainer">
-            <MuiTelInput fullWidth defaultCountry="EG" />
+            <MuiTelInput
+              value={registerForm?.whatsapp}
+              onChange={(e) => setForm({ ...registerForm, whatsapp: e })}
+              fullWidth
+              defaultCountry="EG"
+            />
             <label>WhatsApp</label>
           </div>
           <div className="message">
@@ -669,6 +676,6 @@ export default function App({ Component, pageProps }) {
           </div>
         </div>
       </div>
-    </>
+    </SnackbarProvider>
   );
 }

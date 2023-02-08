@@ -9,13 +9,30 @@ import { useSnackbar } from "notistack";
 function apply() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [form, setform] = useState({});
+  const [form, setForm] = useState({});
   const { enqueueSnackbar } = useSnackbar();
   const materialRef = useRef();
   const nonpaidRef = useRef();
 
+  const languageOptions = ["Arabic", "English", "French"];
+
   const handleInputChange = (e) => {
-    setform({ ...form, [e.target.name]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleMobileChange = (value, options, name) => {
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleLanguagesChange = () => {
+    const array = [];
+    setTimeout(() => {
+      const chips = document.getElementsByClassName("MuiChip-label");
+      for (let i = 0; i < chips.length; i++) {
+        array.push(chips[i].textContent);
+      }
+      setForm({ ...form, languages: array });
+    }, 1000);
   };
 
   const handleApply = () => {
@@ -117,18 +134,24 @@ function apply() {
             <div className={styles.inputContainer}>
               <MuiTelInput
                 name="mobile"
-                onChange={handleInputChange}
+                onChange={(value, options) =>
+                  handleMobileChange(value, options, "mobile")
+                }
                 fullWidth
                 defaultCountry="EG"
+                value={form?.mobile}
               />
               <label>Mobile no.</label>
             </div>
             <div className={styles.inputContainer}>
               <MuiTelInput
                 name="whatsapp"
-                onChange={handleInputChange}
+                onChange={(value, options) =>
+                  handleMobileChange(value, options, "whatsapp")
+                }
                 fullWidth
                 defaultCountry="EG"
+                value={form?.whatsapp}
               />
               <label>WhatsApp</label>
             </div>
@@ -146,6 +169,7 @@ function apply() {
                 options={countries}
                 autoHighlight
                 getOptionLabel={(option) => option.label}
+                onChange={(e)=>setForm({...form, country: e.target.textContent})}
                 renderOption={(props, option) => (
                   <Box
                     component="li"
@@ -165,8 +189,9 @@ function apply() {
                 renderInput={(params) => (
                   <TextField
                     name="country"
-                    onChange={handleInputChange}
                     {...params}
+                    SelectProps={{
+                    }}
                     inputProps={{
                       ...params.inputProps,
                       autoComplete: "new-password",
@@ -179,9 +204,12 @@ function apply() {
             <div className={styles.inputContainer}>
               <Autocomplete
                 multiple
+                style={{ paddingRight: "5px !important" }}
+                name="languages"
                 fullWidth
-                options={["Arabic", "English", "French"]}
+                options={languageOptions}
                 autoHighlight
+                onChange={handleLanguagesChange}
                 getOptionLabel={(option) => option}
                 renderOption={(props, option) => (
                   <Box component="li" {...props}>
@@ -190,8 +218,6 @@ function apply() {
                 )}
                 renderInput={(params) => (
                   <TextField
-                    name="country"
-                    onChange={handleInputChange}
                     {...params}
                     inputProps={{
                       ...params.inputProps,
@@ -223,14 +249,17 @@ function apply() {
         </div>
         <div
           className={styles.thankyou}
-          style={!submitted ?{
-            width:"0",
-            height:"0",
-            padding:"0",
-            margin:"0",
-            opacity:"0",
-          } : {}
-        }
+          style={
+            !submitted
+              ? {
+                  width: "0",
+                  height: "0",
+                  padding: "0",
+                  margin: "0",
+                  opacity: "0",
+                }
+              : {}
+          }
         >
           <div className={styles.imageContainer}>
             <img src="/img/onAir.svg" alt="On Air" />
