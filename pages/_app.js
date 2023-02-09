@@ -150,10 +150,23 @@ export default function App({ Component, pageProps }) {
     if (liveWebinars?.length > 0) {
       setFeaturedWebinar({ ...liveWebinars[0], type: "live" });
     } else if (upcomingWebinars?.length > 0) {
-      setFeaturedWebinar({ ...upcomingWebinars[0], type: "upcoming" });
+      setFeaturedWebinar({
+        ...upcomingWebinars.sort((a, b) => {
+          return (
+            moment(a?.date, "DD-MM-YYYY hh:mm:ss") -
+            moment(b?.date, "DD-MM-YYYY hh:mm:ss")
+          );
+        })[0],
+        type: "upcoming",
+      });
     } else if (pastWebinars?.length > 0) {
       setFeaturedWebinar({
-        ...pastWebinars[pastWebinars?.length - 1],
+        ...pastWebinars.sort((a, b) => {
+          return (
+            moment(b?.date, "DD-MM-YYYY hh:mm:ss") -
+            moment(a?.date, "DD-MM-YYYY hh:mm:ss")
+          );
+        })[0],
         type: "past",
       });
     }
@@ -272,23 +285,25 @@ export default function App({ Component, pageProps }) {
           days[c].autofocus = false;
           days[c].appendChild(a);
           days[c].addEventListener("click", (e) => {
-            if (tooltipContainer.style.visibility === "hidden") {
-              const hide = (item) => {
-                new Promise((resolve) => {
-                  resolve((item.style.visibility = "hidden"));
+            if (tooltipContainer.style.visibility == "hidden") {
+              const hideAll = new Promise((resolve) => {
+                resolve(() => {
+                  const items =
+                    document.getElementsByClassName("tooltipContainer");
+                  for (let item of items) {
+                    item.style.visibility = "hidden";
+                    console.log("hidding item");
+                  }
                 });
-              };
-              const hideAllAndShowCurrent = async () => {
-                const allToolTipContainers =
-                  await document.getElementsByClassName("tooltipContainer");
-                for (let item of allToolTipContainers) {
-                  await hide(item);
-                }
-                tooltipContainer.style.visibility = await "visible";
-              };
-              hideAllAndShowCurrent();
-            } else {
+              });
+              hideAll.then((value) => {
+                value();
+                tooltipContainer.style.visibility = "visible";
+                console.log("make tt visible")
+              });
+            } else if (tooltipContainer.style.visibility == "visible") {
               tooltipContainer.style.visibility = "hidden";
+              console.log("else hide")
             }
           });
           if (!days[c].querySelector(".tooltipContainer")) {
@@ -555,14 +570,18 @@ export default function App({ Component, pageProps }) {
           <div className="title">Subscribe To Raqamyat Webinar</div>
           <div className="inputContainer">
             <TextField
-              onChange={(e) => setForm({ ...registerForm, name: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...registerForm, name: e.target.value })
+              }
               fullWidth
             />
             <label>Name</label>
           </div>
           <div className="inputContainer">
             <TextField
-              onChange={(e) => setForm({ ...registerForm, email: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...registerForm, email: e.target.value })
+              }
               fullWidth
             />
             <label>Email</label>

@@ -286,9 +286,9 @@ export default function Home({
             modules={[Pagination]}
             className={styles.start}
           >
-            {feedbacks.map((feedback) => {
+            {feedbacks.map((feedback,index) => {
               return (
-                <SwiperSlide className={styles.feedback}>
+                <SwiperSlide key={index} className={styles.feedback}>
                   <div className={styles.feedbackContainer}>
                     <div className={styles.title}>
                       <img

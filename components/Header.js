@@ -96,7 +96,7 @@ export default function Header({
         </div>
         <div className={styles.right}>
           <button onClick={() => push("/apply")} className={styles.applyBtn}>
-            Apply For Free
+            Apply <span> For Free</span> 
           </button>
           <button
             onClick={() => {
@@ -175,13 +175,14 @@ export default function Header({
           </div>
           <div className={styles.suggestedNames}>
             {Array.isArray(searchResults) &&
-              searchResults?.map((webinar) => {
+              searchResults?.map((webinar,index) => {
                 return (
                   <div
                     onClick={() => {
                       push(`/webinars/${webinar?.slug}`);
                       setSearchModalOpen(false);
                     }}
+                    key={index}
                     className={styles.suggestedName}
                     style={
                       !searchModalOpen

@@ -195,7 +195,6 @@
       border-radius: 18px;
       transition: opacity 1s;
 
-
       .imageContainer {
 
       }
@@ -224,3 +223,5 @@
     }
   }
 }
+
+@import "./applyResponsive.scss"

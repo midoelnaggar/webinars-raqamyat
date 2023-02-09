@@ -103,6 +103,7 @@ function apply() {
                   padding: "0",
                   margin: "0",
                   opacity: "0",
+                  overflow:"hidden"
                 }
               : {}
           }
@@ -257,6 +258,7 @@ function apply() {
                   padding: "0",
                   margin: "0",
                   opacity: "0",
+                  overflow:"hidden"
                 }
               : {}
           }

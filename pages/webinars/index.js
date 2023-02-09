@@ -118,9 +118,9 @@ function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
           <div className={styles.upcomingWebinars}>
             <div className={styles.title}>Upcoming Webinars</div>
             <div className={styles.cards}>
-              {upcomingWebinars.map((webinar) => {
+              {upcomingWebinars.map((webinar,index) => {
                 return (
-                  <div className={styles.card}>
+                  <div key={index} className={styles.card}>
                     <div className={styles.dateAndTime}>
                       <DateRangeIcon
                         className={styles.icon}
@@ -171,9 +171,9 @@ function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
           <div className={styles.pastWebinars}>
             <div className={styles.title}>Past Webinars</div>
             <div className={styles.cards}>
-              {pastWebinars.map((webinar) => {
+              {pastWebinars.map((webinar,index) => {
                 return (
-                  <div className={styles.card}>
+                  <div key={index} className={styles.card}>
                     <div className={styles.dateAndTime}>
                       <DateRangeIcon
                         className={styles.icon}

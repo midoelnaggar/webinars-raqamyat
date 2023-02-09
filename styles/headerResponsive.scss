@@ -1,9 +1,9 @@
  .header {
-     @media (max-width:768px) {
+     @media (max-width:820px) {
          position: absolute;
          left: 0;
          right: 0;
-         padding: 50px 38px;
+         padding: 25px 38px;
          transform: translate(0);
          width: auto;
          justify-content: space-between;
@@ -14,7 +14,44 @@
              align-items: center;
 
              .applyBtn {
-                 display: none;
+                 padding: 10px 20px;
+                 margin-inline-start: 30px;
+
+                 span {
+                     display: none;
+                 }
+             }
+
+             .searchBtn {
+                 height: 45px;
+                 border: none;
+                 background-color: white;
+                 position: absolute;
+                 left: 0;
+                 right: 0;
+                 margin-left: 0;
+                 bottom: -30px;
+                 width: 85%;
+                 margin: auto;
+                 border-radius: 30px;
+                 box-shadow: 0px 6px 48px rgb(0 0 0 / 8%);
+
+                 img {
+                     left: unset;
+                     right: 0px;
+                 }
+
+                 &::after {
+                     content: "Search by webinar name";
+                      border-radius: 30px;
+                     border: none;
+                     font-size: 16px;
+                     line-height: 18px;
+                     color: #b6b6b6;
+                     display: flex;
+                    align-items: center;
+                    padding: 0 20px;
+                 }
              }
          }
 
@@ -31,30 +68,23 @@
                  margin-bottom: 5px;
              }
          }
+
      }
+ }
 
-     @media (max-width:600px) {
-        padding: 30px 38px;
-         .right {
-             .searchBtn {
-                 width: 40px;
-                 height: 40px;
+ @media (max-width:820px) {
+     .searchModal {
+         .search {
+             left: 0;
+             width: auto;
+             transform: none;
+             padding: 40px 38px;
 
-                 img {
-                     width: 18px;
+             .suggestedNames {
+                 .suggestedName {
+                     font-size: 16px;
+                     line-height: 24px;
                  }
-             }
-         }
-
-         .center {
-             img {
-                 width: 100px;
-             }
-         }
-
-         .left {
-             a {
-                 font-size: 14px;
              }
          }
      }

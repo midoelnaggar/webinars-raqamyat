@@ -1,5 +1,5 @@
 .footer {
-    @media (max-width:768px) {
+    @media (max-width:820px) {
         width: auto;
         position: unset;
         padding: 20px 17px;
@@ -13,9 +13,5 @@
         }
 
     }
-        @media (max-width:360px) {
-            .left {
-                    font-size: 12px;
-                }
-        }
+   
 }
