@@ -4,7 +4,7 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
+export default function Webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
   const router = useRouter();
   return (
     <>
@@ -225,4 +225,3 @@ function webinars({ featuredWebinar, upcomingWebinars, pastWebinars }) {
   );
 }
 
-export default webinars;

@@ -104,11 +104,26 @@
              transform: translate(-60%, -53%);
           }
 
-          .header {
-             position: unset;
-             margin-inline-start: 0;
-             padding: 30px 38px;
+          padding-block: 0;
+    .header {
+      margin-inline-start: 0;
+      padding: 30px 38px;
+    }
+    .swiper {
+        padding: 0;
+      .slide {
+        .card {
+        padding: 38px;
+        transform-origin: top;
+        scale: 0.9;
+          width: 330px;
+          height: unset;
+          .speaker{
+                margin-block: 15px;
           }
+        }
+      }
+    }
        }
 
        .swiper-button-next {

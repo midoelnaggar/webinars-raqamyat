@@ -3,7 +3,7 @@ import Link from "next/link";
 import Head from "next/head";
 
 
-function about() {
+export default function about() {
   return (
     <>
     <Head>
@@ -28,7 +28,7 @@ function about() {
       <div className={styles.subDesc}>
       <div className={styles.start}>
         <p>
-        If you’re looking for knowledge, then you've arrived at the right place. Here you will find all of our recorded webinars with eCommerce specialists from around the globe to watch whenever you wish.
+        If you’re looking for knowledge, then you’ve arrived at the right place. Here you will find all of our recorded webinars with eCommerce specialists from around the globe to watch whenever you wish.
         </p>
         <p>
         Attending live webinars can be more valuable. You will be able to ask our speakers questions and share your experience too.
@@ -64,4 +64,3 @@ function about() {
   );
 }
 
-export default about;

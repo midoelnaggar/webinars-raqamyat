@@ -334,7 +334,7 @@ export default function Home({
             </div>
             <div className={styles.subtitle}>
               <div>
-                <span>Here's what Participants are saying</span>
+                <span>Here’s what Participants are saying</span>
               </div>
               <div>
                 <span>about Raqamyat Webinars</span>

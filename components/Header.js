@@ -95,9 +95,9 @@ export default function Header({
           </Link>
         </div>
         <div className={styles.right}>
-          <button onClick={() => push("/apply")} className={styles.applyBtn}>
+         {/*<button onClick={() => push("/apply")} className={styles.applyBtn}>
             Apply <span> For Free</span> 
-          </button>
+          </button>*/}
           <button
             onClick={() => {
               setSearchModalOpen(true);

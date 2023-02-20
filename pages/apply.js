@@ -6,7 +6,7 @@ import countries from "../data/countries";
 import { ScaleLoader } from "react-spinners";
 import { useSnackbar } from "notistack";
 
-function apply() {
+export default function Apply() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({});
@@ -281,4 +281,3 @@ function apply() {
   );
 }
 
-export default apply;
