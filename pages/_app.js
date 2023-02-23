@@ -534,8 +534,9 @@ export default function App({ Component, pageProps }) {
         className="subscribingModal"
         style={
           subscribeModalOpen
-            ? {}
+            ? {visibility:"visible",}
             : {
+              visibility:"hidden",
                 overflow: "hidden",
                 width: "0",
                 height: "0",
