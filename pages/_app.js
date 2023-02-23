@@ -534,7 +534,7 @@ export default function App({ Component, pageProps }) {
         className="subscribingModal"
         style={
           subscribeModalOpen
-            ? {visibility:"visible",}
+            ? {visibility:"visible",opacity:"1"}
             : {
               visibility:"hidden",
                 overflow: "hidden",
@@ -558,12 +558,16 @@ export default function App({ Component, pageProps }) {
             !subscribeModalOpen || subscribed
               ? {
                   scale: "0",
+                  opacity:"0",
+                  visibility:"hidden"
                 }
               : {
                   scale:
                     width > 820
                       ? (width / 1920).toString()
                       : (width / 412).toString(),
+                      opacity:"1",
+                      visibility:"visible"
                 }
           }
           className="subscribeForm"
