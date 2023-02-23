@@ -20,5 +20,3 @@ export const validatePassword = (password) => {
   return String(password)
     .match(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g);
 };
-
-
