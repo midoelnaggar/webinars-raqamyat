@@ -1,98 +1,98 @@
 .webinars {
-    @media (max-width:820px) {
-        padding-inline: 0;
-        padding: 0px 38px;
+  @media (max-width: 820px) {
+    padding-inline: 0;
+    padding: 0px 38px;
 
-        .featuredWebinar {
-            .bottom {
-                flex-direction: column;
-                height: auto;
+    .featuredWebinar {
+      .bottom {
+        flex-direction: column;
+        height: auto;
 
-                .left {
-                    .webinarImage {
-                        width: 100%;
-                        height: auto;
-                    }
-                }
-
-                .right {
-                    width: auto;
-                    margin-top: -170px;
-                    position: relative;
-                }
-            }
+        .left {
+          .webinarImage {
+            width: 100%;
+            height: auto;
+          }
         }
 
-        .upcomingWebinars, .pastWebinars {
-            background-color: white;
-            margin: 0;
-            padding: 0;
-            padding-top: 105px;
-            .cards{
-                .card{
-  
-                    margin-block: 0;
-                    margin-inline: -38px;
-                    scale: 0.9;
-                    padding: 38px;
-                    width: 100%;
-                    height: unset;
-                    .speaker{
-                        margin-block: 15px;
-                    }
-                }
-            }
+        .right {
+          width: auto;
+          margin-top: -170px;
+          position: relative;
         }
+      }
     }
 
-    @media (max-width:820px) {
-        .featuredWebinar {
-            .top {
-                .left {
-                    .subtitle {
-                        div {
-                            margin-block: 0;
-                            margin-top: 5px;
-
-                            span {
-                                font-size: 16px;
-                                line-height: 24px;
-                            }
-                        }
-                    }
-                }
-            }
-
-            .bottom {
-                .right {
-                    margin-top: -55px;
-
-                    .title {
-                        font-size: 24px;
-                        letter-spacing: 0;
-                        line-height: 27px;
-                    }
-
-                    .peaker {
-                        .speakerLeft {
-                            img {
-                                width: 50px;
-                                height: 50px;
-                            }
-                        }
-
-                        .speakerRight {
-                            .name {
-                                font-size: 15px;
-                            }
-
-                            .position {
-                                font-size: 15px;
-                            }
-                        }
-                    }
-                }
-            }
+    .upcomingWebinars,
+    .pastWebinars {
+      background-color: white;
+      margin: 0;
+      padding: 0;
+      padding-top: 105px;
+      .cards {
+        .card {
+          margin-block: 0;
+          margin-inline: -38px;
+          scale: 0.9;
+          padding: 38px;
+          width: 100%;
+          height: unset;
+          .speaker {
+            margin-block: 15px;
+          }
         }
+      }
     }
+  }
+
+  @media (max-width: 820px) {
+    .featuredWebinar {
+      .top {
+        .left {
+          .subtitle {
+            div {
+              margin-block: 0;
+              margin-top: 5px;
+
+              span {
+                font-size: 16px;
+                line-height: 24px;
+              }
+            }
+          }
+        }
+      }
+
+      .bottom {
+        .right {
+          margin-top: -55px;
+
+          .title {
+            font-size: 24px;
+            letter-spacing: 0;
+            line-height: 27px;
+          }
+
+          .peaker {
+            .speakerLeft {
+              img {
+                width: 50px;
+                height: 50px;
+              }
+            }
+
+            .speakerRight {
+              .name {
+                font-size: 15px;
+              }
+
+              .position {
+                font-size: 15px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

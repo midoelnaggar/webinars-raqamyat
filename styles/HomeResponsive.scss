@@ -59,6 +59,8 @@
              .left {
                 .webinarImage {
                    width: 100%;
+                   object-fit: contain;
+                  object-position: top;
                 }
 
              }
@@ -101,7 +103,7 @@
 
           .upcomingWebinarsBg {
              left: 0;
-             transform: translate(-60%, -53%);
+             -webkit-transform: translate(-60%, -53%);
           }
 
           padding-block: 0;
@@ -114,7 +116,7 @@
       .slide {
         .card {
         padding: 38px;
-        transform-origin: top;
+        -webkit-transform-origin: top;
         scale: 0.9;
           width: 330px;
           height: unset;
@@ -362,12 +364,12 @@
                 }
 
                 .subtitle {
-                   line-height: 1.1;
+                   line-height: 0.95;
 
                    div {
                       span {
-                         font-size: 16px;
-                         line-height: 18px;
+                         font-size: 14px;
+                         line-height: 14px;
                       }
                    }
                 }
@@ -391,7 +393,7 @@
        bottom: 40px;
        right: 0;
        left: 50%;
-       transform: translate(-50%, 0%);
+       -webkit-transform: translate(-50%, 0%);
 
        .right {
           display: none;

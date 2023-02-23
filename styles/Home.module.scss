@@ -111,7 +111,7 @@
           cursor: pointer;
           left: 50%;
           top: 50%;
-          transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%);
           position: absolute;
           width: 238px;
           height: 71px;
@@ -266,7 +266,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
     }
     .header {
       margin-inline-start: 277px;

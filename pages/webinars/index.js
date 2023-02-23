@@ -44,14 +44,14 @@ export default function Webinars({ featuredWebinar, upcomingWebinars, pastWebina
                 onError={(e)=>e.target.src = "/img/fallbackWebinars.jpg"}
                 alt="webinarImage"
               />
-              <div className={styles.watchNowBtn}>
+            <a href={featuredWebinar?.zoom_link} target="_blank" rel="noopener noreferrer" className={styles.watchNowBtn}>
                 <img
                   className={styles.playIcon}
                   src="/img/play.svg"
                   alt="play"
                 />
                 Watch Now
-              </div>
+              </a>
             </div>
             <div className={styles.right}>
               <div className={styles.status}>

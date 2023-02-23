@@ -10,6 +10,8 @@ import { MuiTelInput } from "mui-tel-input";
 import Link from "next/link";
 import PastWebinars from "../../components/PastWebinars";
 import axios from "axios";
+import { useSnackbar } from "notistack";
+import { validateEmail, validateMobile } from "../../helpers/validations";
 
 function Webinar({
   pastWebinars,
@@ -21,8 +23,9 @@ function Webinar({
 }) {
   const [webinar, setWebinar] = useState({});
   const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({ name: "", email: "", whatsapp: "" });
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const getWebinar = async () => {
@@ -53,19 +56,41 @@ function Webinar({
 
   const handleRegisterButton = () => {
     setRegistering(true);
-    const submit = async () => {
-      const res = await axios.post("https://newraq.raqamyat.com/public/api/webinarStore",form);
-      if (res.status === 200) {
-        setRegisteredModalOpen(true);
-        setRegistering(false);
-        setRegistered(true);
+    if (
+      form?.name?.length === 0 ||
+      form?.email?.length === 0 ||
+      form?.whatsapp?.length === 0
+    ) {
+      enqueueSnackbar("Please complete all fields", { variant: "info" });
+      setRegistering(false);
+    } else {
+      if (!validateEmail(form?.email) || !validateMobile(form?.whatsapp)) {
+        if (!validateEmail(form?.email)) {
+          enqueueSnackbar("Invalid email.", { variant: "warning" });
+          setRegistering(false);
+        }
+        if (!validateMobile(form.whatsapp)) {
+          enqueueSnackbar("Invalid Whatsapp number.", { variant: "warning" });
+          setRegistering(false);
+        }
+      } else {
+        const submit = async () => {
+          const res = await axios.post(
+            "https://newraq.raqamyat.com/public/api/webinarStore",
+            form
+          );
+          if (res.status === 200) {
+            setRegisteredModalOpen(true);
+            setRegistering(false);
+            setRegistered(true);
+          } else {
+            console.log("somthing went wrong!");
+            setRegistering(false);
+          }
+        };
+        submit();
       }
-      else {
-        console.log("somthing went wrong!");
-        setRegistering(false);
-      }
-    };
-    submit();
+    }
   };
 
   return (
@@ -109,10 +134,15 @@ function Webinar({
               src={webinar?.image}
               alt="webinarImage"
             />
-            <div className={styles.watchNowBtn}>
+            <a
+              href={webinar?.zoom_link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.watchNowBtn}
+            >
               <img className={styles.playIcon} src="/img/play.svg" alt="play" />
               Watch Now
-            </div>
+            </a>
           </div>
         </div>
         <div className={styles.center}>
@@ -145,6 +175,7 @@ function Webinar({
               <div className={styles.title}>Access the webinar now</div>
               <div className={styles.inputContainer}>
                 <TextField
+                  value={form?.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   fullWidth
                 />
@@ -152,6 +183,7 @@ function Webinar({
               </div>
               <div className={styles.inputContainer}>
                 <TextField
+                  value={form?.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   fullWidth
                 />

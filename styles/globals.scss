@@ -27,7 +27,7 @@ button {
 }
 
 .app {
-transform-origin: top left;
+-webkit-transform-origin: top left;
   overflow-x: hidden;
   width: 1920px;
   position: absolute;
@@ -40,7 +40,7 @@ transform-origin: top left;
 }
 
 .calendar {
-  transform-origin: center bottom;
+  -webkit-transform-origin: center bottom;
   position: fixed;
   scale: 1;
   right: 97px;
@@ -79,7 +79,7 @@ transform-origin: top left;
   }
 }
 .calendarBtn {
-  transform-origin: center top;
+  -webkit-transform-origin: center top;
   cursor: pointer;
   position: fixed;
   scale: 1;
@@ -105,7 +105,7 @@ transform-origin: top left;
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
     }
   }
   .right {
@@ -115,7 +115,7 @@ transform-origin: top left;
     font-weight: 500;
     top: 50%;
     left: 72px;
-    transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
     width: 60%;
     text-align: center;
   }
@@ -268,7 +268,7 @@ button[name="hasWebinar"] {
     z-index: 1;
     bottom: 100%;
     left: 50%;
-    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
     box-shadow: 0px 0px 48px #00000029;
     .tooltip {
       .tooltipStatus {

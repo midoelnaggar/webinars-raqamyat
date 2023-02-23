@@ -2,7 +2,7 @@
   position: absolute;
   left: 50%;
   padding: 50px 60px;
-  transform: translate(-50%);
+  -webkit-transform: translate(-50%);
   width: calc(100% - 552px);
   display: flex;
   align-items: center;
@@ -21,7 +21,7 @@
         position: absolute;
         bottom: 0;
         left: 50%;
-        transform: translate(-50%, 50%);
+        -webkit-transform: translate(-50%, 50%);
         width: 12px;
         height: 3px;
         background-color: var(--c2);
@@ -68,7 +68,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
         width: 25px;
         height: 22px;
       }
@@ -100,7 +100,7 @@
     top: 0;
     left: 50%;
     padding: 50px 77px;
-    transform: translate(-50%);
+    -webkit-transform: translate(-50%);
     width: calc(100% - 550px);
     z-index: 5;
     .inputAndButton {
@@ -134,11 +134,11 @@
           position: absolute;
           top: 50%;
           left: 50%;
-          transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%);
           width: 25px;
           height: 22px;
           transition: all 0.5s;
-          transform-origin: top left;
+          -webkit-transform-origin: top left;
         }
       }
       button:focus {
